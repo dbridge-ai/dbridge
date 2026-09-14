@@ -1307,145 +1307,6 @@ const SQLEditor: React.FC = () => {
           },
         }}
       />
-      <Modal title={tr('query.rowDetail')} open={rowDetail.open} onCancel={() => setRowDetail({ open: false, data: null, columns: [] })}
-        footer={null} width={800}
-      >
-        {rowDetail.data && (
-          <Table
-            tableLayout="fixed"
-            dataSource={rowDetail.columns.map((col, i) => {
-              const meta = columnMeta[col];
-              return {
-                key: i,
-                name: col,
-                value: rowDetail.data![col] != null ? String(rowDetail.data![col]) : null,
-                meta: meta
-                  ? `${meta.type}${meta.key === 'PRI' ? ' · PK' : ''}${!meta.nullable ? ' · NOT NULL' : ' · nullable'}${meta.comment ? ` · ${meta.comment}` : ''}`
-                  : '',
-              };
-            })}
-            columns={[
-              { title: tr('query.columnName'), dataIndex: 'name', key: 'name', width: 150, ellipsis: { showTitle: true } },
-              {
-                title: tr('query.value'), dataIndex: 'value', key: 'value',
-                render: (val: string | null) =>
-                  val != null ? (
-                    <div style={{ wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{val}</div>
-                  ) : (
-                    <span style={{ color: '#ccc', fontStyle: 'italic' }}>NULL</span>
-                  ),
-              },
-              {
-                title: tr('query.fieldInfo'), dataIndex: 'meta', key: 'meta', width: 280,
-                render: (m: string) => (
-                  <span style={{ fontSize: 12, color: '#666', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{m}</span>
-                ),
-              },
-            ]}
-            size="small"
-            pagination={false}
-            bordered
-          />
-        )}
-      </Modal>
-      <Modal title={tr('query.editRow')} open={rowEdit.open}
-        onCancel={() => setRowEdit({ open: false, data: null, columns: [], tab: null })}
-        onOk={async () => {
-          const values = await editForm.validateFields();
-          setEditSaving(true);
-          try {
-            // Build SET clause from changed values
-            const changedFields = rowEdit.columns
-              .filter((col) => String(values[col] ?? '') !== String(rowEdit.data![col] ?? ''));
-            if (changedFields.length === 0) { message.info(tr('query.noChange')); setEditSaving(false); return; }
-            // For table tabs, we know the table name
-            const tab = rowEdit.tab;
-            if (tab?.type === 'table') {
-              const t = tab as TableTab;
-              const ds = (tab as any).dsId || treeDSRef.current;
-              const dsInfo = dataSources.find(d => d.id === ds);
-              const tabDbType = dsInfo?.type || dbType;
-              const gen = getDialect(tabDbType);
-              // Build SET values
-              const sets: Record<string, any> = {};
-              const colTypes: Record<string, string> = {};
-              for (const col of changedFields) {
-                sets[col] = values[col];
-                colTypes[col] = columnMeta[col]?.type || '';
-              }
-              // Use PK columns for WHERE (if known), otherwise all non-null original values
-              const pkKey = `${ds}:${t.schema}:${t.table}`;
-              const pkCol = tablePKMap[pkKey];
-              let whereCols: string[];
-              if (pkCol) {
-                whereCols = [pkCol].filter(col => rowEdit.data![col] != null);
-                if (whereCols.length === 0) whereCols = rowEdit.columns.filter(col => rowEdit.data![col] != null);
-              } else {
-                whereCols = rowEdit.columns.filter(col => rowEdit.data![col] != null);
-              }
-              const where: Record<string, any> = {};
-              for (const col of whereCols) {
-                where[col] = rowEdit.data![col];
-                if (!colTypes[col]) colTypes[col] = columnMeta[col]?.type || '';
-              }
-              const schema = t.schema || currentSchema || '';
-              const sql = gen.updateQuery(schema, t.table, sets, where, colTypes);
-              await queryAPI.executeDML({ data_source_id: ds, sql, schema: schema || undefined, database: t.database || currentDatabase || undefined });
-              message.success(tr('query.updateSuccess'));
-              setRowEdit({ open: false, data: null, columns: [], tab: null });
-              if (tab?.type === 'table') loadTableTab(tab.id, (tab as any).page, (tab as any).pageSize);
-            } else {
-              // For SQL tabs, generate UPDATE and copy to clipboard
-              const gen = getDialect(dbType);
-              const setParts = changedFields.map((col) => `${gen.quoteIdent(col)} = ${gen.formatValue(String(values[col]), columnMeta[col]?.type)}`).join(', ');
-              const whereParts = rowEdit.columns.map((col) => `${gen.quoteIdent(col)} = ${gen.formatValue(String(rowEdit.data![col] ?? ''), columnMeta[col]?.type)}`).join(' AND ');
-              const sql = `UPDATE ? SET ${setParts} WHERE ${whereParts};`;
-              await navigator.clipboard.writeText(sql);
-              message.info(tr('query.sqlCopiedManual'));
-              setRowEdit({ open: false, data: null, columns: [], tab: null });
-            }
-          } catch (err: any) {
-            message.error(err?.response?.data?.message || tr('query.updateFailed'));
-          } finally { setEditSaving(false); }
-        }}
-        confirmLoading={editSaving} okText={tr('query.save')} cancelText={tr('common.cancelText')} width={600}
-      >
-        {rowEdit.data && (
-          <Form form={editForm} layout="vertical">
-            {rowEdit.columns.map((col) => {
-              const meta = columnMeta[col];
-              const label = meta
-                ? `${col}  [${meta.type}]${meta.key === 'PRI' ? ' 🔑PK' : ''}${!meta.nullable ? ' *NOT NULL' : ''}${meta.comment ? ` - ${meta.comment}` : ''}`
-                : col;
-              return (
-              <Form.Item key={col} name={col} label={<span style={{ fontSize: 12 }}>{label}</span>}>
-                <Input.TextArea autoSize={{ minRows: 1, maxRows: 3 }} />
-              </Form.Item>
-              );
-            })}
-          </Form>
-        )}
-      </Modal>
-      {/* Add Row Modal */}
-      <Modal title={tr('query.addRow')} open={rowAdd.open}
-        onCancel={() => { setRowAdd({ open: false, tab: null, tableName: '', pkColumn: null }); addForm.resetFields(); }}
-        onOk={() => addForm.submit()}
-        okText={tr('query.add')} width={500}
-      >
-        <Form form={addForm} layout="vertical" onFinish={handleAddRow}>
-          {rowAdd.tab && (rowAdd.tab.result?.columns || []).map((col: string) => {
-            const meta = columnMeta[col];
-            const label = meta
-              ? `${col}  [${meta.type}]${meta.key === 'PRI' ? ' 🔑PK' : ''}${!meta.nullable ? ' *NOT NULL' : ''}${meta.comment ? ` - ${meta.comment}` : ''}`
-              : col;
-            return (
-            <Form.Item key={col} name={col} label={<span style={{ fontSize: 14, fontWeight: 500 }}>{label}</span>}>
-              <Input placeholder={col === rowAdd.pkColumn ? tr('query.pkSkip') : ''} />
-            </Form.Item>
-            );
-          })}
-        </Form>
-      </Modal>
       </>
     );
   };
@@ -1989,6 +1850,150 @@ const SQLEditor: React.FC = () => {
         dbType={dataSources.find(d => d.id === (drawerTarget?.dsId || treeDSRef.current))?.type || 'mysql'} schema={drawerTarget?.schema || ''} table={drawerTarget?.table || ''}
         isView={drawerTarget?.isView} readOnly={readOnly} database={drawerTarget?.database}
         onClose={() => setDrawerOpen(false)} onRefreshTree={refreshTree} />
+
+      {/* Row Detail Modal */}
+      <Modal title={tr('query.rowDetail')} open={rowDetail.open} onCancel={() => setRowDetail({ open: false, data: null, columns: [] })}
+        footer={null} width={800}
+      >
+        {rowDetail.data && (
+          <Table
+            tableLayout="fixed"
+            dataSource={rowDetail.columns.map((col, i) => {
+              const meta = columnMeta[col];
+              return {
+                key: i,
+                name: col,
+                value: rowDetail.data![col] != null ? String(rowDetail.data![col]) : null,
+                meta: meta
+                  ? `${meta.type}${meta.key === 'PRI' ? ' · PK' : ''}${!meta.nullable ? ' · NOT NULL' : ' · nullable'}${meta.comment ? ` · ${meta.comment}` : ''}`
+                  : '',
+              };
+            })}
+            columns={[
+              { title: tr('query.columnName'), dataIndex: 'name', key: 'name', width: 150, ellipsis: { showTitle: true } },
+              {
+                title: tr('query.value'), dataIndex: 'value', key: 'value',
+                render: (val: string | null) =>
+                  val != null ? (
+                    <div style={{ wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{val}</div>
+                  ) : (
+                    <span style={{ color: '#ccc', fontStyle: 'italic' }}>NULL</span>
+                  ),
+              },
+              {
+                title: tr('query.fieldInfo'), dataIndex: 'meta', key: 'meta', width: 280,
+                render: (m: string) => (
+                  <span style={{ fontSize: 12, color: '#666', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{m}</span>
+                ),
+              },
+            ]}
+            size="small"
+            pagination={false}
+            bordered
+          />
+        )}
+      </Modal>
+
+      {/* Row Edit Modal */}
+      <Modal title={tr('query.editRow')} open={rowEdit.open}
+        onCancel={() => setRowEdit({ open: false, data: null, columns: [], tab: null })}
+        onOk={async () => {
+          const values = await editForm.validateFields();
+          setEditSaving(true);
+          try {
+            // Build SET clause from changed values
+            const changedFields = rowEdit.columns
+              .filter((col) => String(values[col] ?? '') !== String(rowEdit.data![col] ?? ''));
+            if (changedFields.length === 0) { message.info(tr('query.noChange')); setEditSaving(false); return; }
+            // For table tabs, we know the table name
+            const tab = rowEdit.tab;
+            if (tab?.type === 'table') {
+              const t = tab as TableTab;
+              const ds = (tab as any).dsId || treeDSRef.current;
+              const dsInfo = dataSources.find(d => d.id === ds);
+              const tabDbType = dsInfo?.type || dbType;
+              const gen = getDialect(tabDbType);
+              // Build SET values
+              const sets: Record<string, any> = {};
+              const colTypes: Record<string, string> = {};
+              for (const col of changedFields) {
+                sets[col] = values[col];
+                colTypes[col] = columnMeta[col]?.type || '';
+              }
+              // Use PK columns for WHERE (if known), otherwise all non-null original values
+              const pkKey = `${ds}:${t.schema}:${t.table}`;
+              const pkCol = tablePKMap[pkKey];
+              let whereCols: string[];
+              if (pkCol) {
+                whereCols = [pkCol].filter(col => rowEdit.data![col] != null);
+                if (whereCols.length === 0) whereCols = rowEdit.columns.filter(col => rowEdit.data![col] != null);
+              } else {
+                whereCols = rowEdit.columns.filter(col => rowEdit.data![col] != null);
+              }
+              const where: Record<string, any> = {};
+              for (const col of whereCols) {
+                where[col] = rowEdit.data![col];
+                if (!colTypes[col]) colTypes[col] = columnMeta[col]?.type || '';
+              }
+              const schema = t.schema || currentSchema || '';
+              const sql = gen.updateQuery(schema, t.table, sets, where, colTypes);
+              await queryAPI.executeDML({ data_source_id: ds, sql, schema: schema || undefined, database: t.database || currentDatabase || undefined });
+              message.success(tr('query.updateSuccess'));
+              setRowEdit({ open: false, data: null, columns: [], tab: null });
+              if (tab?.type === 'table') loadTableTab(tab.id, (tab as any).page, (tab as any).pageSize);
+            } else {
+              // For SQL tabs, generate UPDATE and copy to clipboard
+              const gen = getDialect(dbType);
+              const setParts = changedFields.map((col) => `${gen.quoteIdent(col)} = ${gen.formatValue(String(values[col]), columnMeta[col]?.type)}`).join(', ');
+              const whereParts = rowEdit.columns.map((col) => `${gen.quoteIdent(col)} = ${gen.formatValue(String(rowEdit.data![col] ?? ''), columnMeta[col]?.type)}`).join(' AND ');
+              const sql = `UPDATE ? SET ${setParts} WHERE ${whereParts};`;
+              await navigator.clipboard.writeText(sql);
+              message.info(tr('query.sqlCopiedManual'));
+              setRowEdit({ open: false, data: null, columns: [], tab: null });
+            }
+          } catch (err: any) {
+            message.error(err?.response?.data?.message || tr('query.updateFailed'));
+          } finally { setEditSaving(false); }
+        }}
+        confirmLoading={editSaving} okText={tr('query.save')} cancelText={tr('common.cancelText')} width={600}
+      >
+        {rowEdit.data && (
+          <Form form={editForm} layout="vertical">
+            {rowEdit.columns.map((col) => {
+              const meta = columnMeta[col];
+              const label = meta
+                ? `${col}  [${meta.type}]${meta.key === 'PRI' ? ' 🔑PK' : ''}${!meta.nullable ? ' *NOT NULL' : ''}${meta.comment ? ` - ${meta.comment}` : ''}`
+                : col;
+              return (
+              <Form.Item key={col} name={col} label={<span style={{ fontSize: 12 }}>{label}</span>}>
+                <Input.TextArea autoSize={{ minRows: 1, maxRows: 3 }} />
+              </Form.Item>
+              );
+            })}
+          </Form>
+        )}
+      </Modal>
+
+      {/* Add Row Modal */}
+      <Modal title={tr('query.addRow')} open={rowAdd.open}
+        onCancel={() => { setRowAdd({ open: false, tab: null, tableName: '', pkColumn: null }); addForm.resetFields(); }}
+        onOk={() => addForm.submit()}
+        okText={tr('query.add')} width={500}
+      >
+        <Form form={addForm} layout="vertical" onFinish={handleAddRow}>
+          {rowAdd.tab && (rowAdd.tab.result?.columns || []).map((col: string) => {
+            const meta = columnMeta[col];
+            const label = meta
+              ? `${col}  [${meta.type}]${meta.key === 'PRI' ? ' 🔑PK' : ''}${!meta.nullable ? ' *NOT NULL' : ''}${meta.comment ? ` - ${meta.comment}` : ''}`
+              : col;
+            return (
+            <Form.Item key={col} name={col} label={<span style={{ fontSize: 14, fontWeight: 500 }}>{label}</span>}>
+              <Input placeholder={col === rowAdd.pkColumn ? tr('query.pkSkip') : ''} />
+            </Form.Item>
+            );
+          })}
+        </Form>
+      </Modal>
 
       {/* View definition modal */}
       <Modal 
