@@ -814,7 +814,7 @@ const SchemaTree: React.FC<SchemaTreeProps> = ({
     });
   }
 
-  // Handle select
+  // Handle select — only handles selection/navigation; expansion is managed exclusively by onExpand.
   const handleSelect = useCallback(
     (_selectedKeys: React.Key[], info: any) => {
       const key = String(info.node.key);
@@ -823,13 +823,6 @@ const SchemaTree: React.FC<SchemaTreeProps> = ({
 
       // Known object types from the object management feature
       const objectTypes = new Set(['procedure', 'function', 'trigger', 'event', 'sequence', 'type', 'synonym', 'package']);
-
-      // For non-leaf nodes: toggle expand on click
-      if (nodeType !== 'table' && nodeType !== 'view' && nodeType !== 'matview' && !objectTypes.has(nodeType)) {
-        setExpandedKeys(prev =>
-          prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
-        );
-      }
 
       if (nodeType === 'table' || nodeType === 'view' || nodeType === 'matview') {
         // Key formats:
