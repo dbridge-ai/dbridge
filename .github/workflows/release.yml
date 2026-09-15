@@ -1,0 +1,75 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build Frontend
+        run: |
+          cd web
+          npm install
+          npm run build
+
+      - name: Build Backend
+        env:
+          CGO_ENABLED: 1
+        run: |
+          go build -trimpath -ldflags "-s -w" -o dbridge ./cmd/server/
+
+      - name: Package release archive
+        run: |
+          TAG_NAME=${GITHUB_REF_NAME#v}
+          ARCHIVE_NAME="dbridge-${TAG_NAME}-linux-amd64"
+          mkdir -p "${ARCHIVE_NAME}"
+          cp dbridge "${ARCHIVE_NAME}/"
+          cp -r web/dist "${ARCHIVE_NAME}/web/dist"
+          cp -r configs "${ARCHIVE_NAME}/configs"
+          cp start.sh stop.sh restart.sh status.sh "${ARCHIVE_NAME}/" 2>/dev/null || true
+          tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}.tar.gz" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ARCHIVE_NAME }}
+          body: |
+            ## DBridge ${{ github.ref_name }}
+
+            ### 构建内容
+            - Go 后端 (linux-amd64)
+            - React 前端 (已编译)
+
+            ### 使用方法
+            1. 解压: `tar -xzf ${{ env.ARCHIVE_NAME }}`
+            2. 进入目录: `cd ${{ env.ARCHIVE_NAME%.tar.gz }}`
+            3. 编辑配置: `vim configs/config.yaml`
+            4. 启动服务: `./start.sh`
+
+            ### 停止/重启
+            - 停止: `./stop.sh`
+            - 重启: `./restart.sh`
+            - 状态: `./status.sh`
+          draft: false
+          prerelease: false

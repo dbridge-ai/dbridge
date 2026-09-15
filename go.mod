@@ -1,5 +1,6 @@
 // module github.com/dbridge/dbridge
 module github.com/homej-top/dbridge
+
 go 1.26.3
 
 require (
@@ -17,7 +18,6 @@ require (
 	github.com/lib/pq v1.12.3
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/microsoft/go-mssqldb v1.10.0
-	github.com/opentoys/agentsdk v1.7.2
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/redis/go-redis/v9 v9.20.0
 	github.com/sijms/go-ora/v2 v2.9.0
@@ -108,5 +108,3 @@ require (
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 )
-
-replace github.com/opentoys/agentsdk => /home/wu/workspace/agentsdk
