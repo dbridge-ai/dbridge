@@ -1,0 +1,114 @@
+name: community-release
+
+# dbridge-community 发布流水线（PR56 §4.3）
+# v* tag → 各平台构建（后端 CGO 原生编译 + 前端）→ 发布到多平台 Releases。
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build (${{ matrix.goos }}-${{ matrix.goarch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            goos: linux
+            goarch: amd64
+            artifact: linux-amd64
+          - os: ubuntu-24.04-arm
+            goos: linux
+            goarch: arm64
+            artifact: linux-arm64
+          - os: macos-14
+            goos: darwin
+            goarch: arm64
+            artifact: darwin-arm64
+          - os: macos-13
+            goos: darwin
+            goarch: amd64
+            artifact: darwin-amd64
+          - os: windows-latest
+            goos: windows
+            goarch: amd64
+            artifact: windows-amd64
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend
+        run: |
+          cd web
+          npm install
+          npm run build
+
+      - name: Build backend (CGO for SQLite)
+        env:
+          CGO_ENABLED: '1'
+        run: |
+          ./build.sh release backend
+
+      - name: Assemble package
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          DIR="dbridge-community_${TAG}_${{ matrix.artifact }}"
+          mkdir -p "${DIR}/web" "${DIR}/configs"
+          cp dbridge "${DIR}/" 2>/dev/null || cp dbridge.exe "${DIR}/" 2>/dev/null || true
+          cp -r web/dist "${DIR}/web/dist"
+          cp -r configs "${DIR}/configs"
+          cp start.sh stop.sh restart.sh status.sh "${DIR}/" 2>/dev/null || true
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            (cd "$DIR" && zip -qr "../${DIR}.zip" .)
+            echo "PKG=${DIR}.zip" >> "$GITHUB_ENV"
+          else
+            tar -czf "${DIR}.tar.gz" "${DIR}"
+            echo "PKG=${DIR}.tar.gz" >> "$GITHUB_ENV"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ env.PKG }}
+
+  release:
+    name: publish
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+
+      - name: Publish to Gitee / GitCode
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          GITCODE_TOKEN: ${{ secrets.GITCODE_TOKEN }}
+        run: |
+          if [ -f scripts/publish-to-platforms.sh ]; then
+            ./scripts/publish-to-platforms.sh "${GITHUB_REF_NAME#v}" artifacts gitee gitcode
+          else
+            echo "[WARN] publish-to-platforms.sh 不存在，跳过非 GitHub 平台发布"
+          fi
