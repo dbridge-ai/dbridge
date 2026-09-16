@@ -2,6 +2,8 @@ package repository
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/homej-top/dbridge/internal/config"
 	"github.com/homej-top/dbridge/internal/service/drivers"
@@ -68,6 +70,11 @@ func Init(cfg config.DatabaseConfig) error {
 		dialector = postgres.Open(dsn)
 	case "sqlite":
 		dsn = cfg.SQLite.Path
+		if dir := filepath.Dir(dsn); dir != "" && dir != "." {
+			if err := os.MkdirAll(dir, 0755); err != nil {
+				return fmt.Errorf("failed to create sqlite directory %s: %w", dir, err)
+			}
+		}
 		dialector = sqlite.Open(dsn)
 	default:
 		return fmt.Errorf("unsupported database type: %s", cfg.Type)
