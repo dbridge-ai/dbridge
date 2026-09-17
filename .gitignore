@@ -1,6 +1,4 @@
 # Binaries
-/server
-/db-sync-web-server
 *.exe
 
 # Data
@@ -27,7 +25,6 @@ go.sum
 # Old Rust artifacts
 target/
 bugs/
-docs/images/
 vendor/
 dist/
 tests/
@@ -36,9 +33,6 @@ export_files/
 .fuse_hidden*
 .dbridge.pid
 dbridge
-server-plain
-server-release
-db-sync-server
 cmd/server/__*
 web/node_modules/
 web/dist
@@ -52,5 +46,3 @@ docs/
 test/
 export_logs
 docs
-docs_bak
-dbridge-server

@@ -48,12 +48,13 @@ jobs:
           cp -r configs "${ARCHIVE_NAME}/configs"
           cp start.sh stop.sh restart.sh status.sh "${ARCHIVE_NAME}/" 2>/dev/null || true
           tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
-          echo "ARCHIVE_NAME=${ARCHIVE_NAME}.tar.gz" >> "$GITHUB_ENV"
+          echo "ARCHIVE_FILE=${ARCHIVE_NAME}.tar.gz" >> "$GITHUB_ENV"
+          echo "ARCHIVE_DIR=${ARCHIVE_NAME}" >> "$GITHUB_ENV"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.ARCHIVE_NAME }}
+          files: ${{ env.ARCHIVE_FILE }}
           body: |
             ## DBridge ${{ github.ref_name }}
 
@@ -62,8 +63,8 @@ jobs:
             - React 前端 (已编译)
 
             ### 使用方法
-            1. 解压: `tar -xzf ${{ env.ARCHIVE_NAME }}`
-            2. 进入目录: `cd ${{ env.ARCHIVE_NAME%.tar.gz }}`
+            1. 解压: `tar -xzf ${{ env.ARCHIVE_FILE }}`
+            2. 进入目录: `cd ${{ env.ARCHIVE_DIR }}`
             3. 编辑配置: `vim configs/config.yaml`
             4. 启动服务: `./start.sh`
 
