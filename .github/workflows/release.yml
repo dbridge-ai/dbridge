@@ -47,8 +47,10 @@ jobs:
           ARCHIVE_NAME="dbridge-${TAG_NAME}-linux-amd64"
           mkdir -p "${ARCHIVE_NAME}"
           cp dbridge "${ARCHIVE_NAME}/"
+          mkdir -p "${ARCHIVE_NAME}/web"
           cp -r web/dist "${ARCHIVE_NAME}/web/dist"
-          cp -r configs "${ARCHIVE_NAME}/configs"
+          mkdir -p "${ARCHIVE_NAME}/configs"
+          cp -r configs/* "${ARCHIVE_NAME}/configs/"
           cp start.sh stop.sh restart.sh status.sh "${ARCHIVE_NAME}/" 2>/dev/null || true
           tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
           echo "ARCHIVE_FILE=${ARCHIVE_NAME}.tar.gz" >> "$GITHUB_ENV"
