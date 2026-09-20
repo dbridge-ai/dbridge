@@ -111,10 +111,21 @@ ZIG_BIN=$(require_zig) || { log_error "zig not found. Install: https://ziglang.o
 
 # ── macOS SDK detection (optional, for darwin cross-compilation) ────────────
 find_darwin_sdk() {
+    # 1. Explicit SDKROOT
     if [ -n "$SDKROOT" ] && [ -d "$SDKROOT" ]; then
         echo "$SDKROOT"
         return 0
     fi
+    # 2. Shared workspace SDK (../.sdk relative to project)
+    local shared_dir="$(cd "$ROOT_DIR/.." 2>/dev/null && pwd)/.sdk"
+    for sdk_ver in 15.5 14.0 11.3; do
+        local shared_sdk="$shared_dir/MacOSX${sdk_ver}.sdk"
+        if [ -d "$shared_sdk" ]; then
+            echo "$shared_sdk"
+            return 0
+        fi
+    done
+    # 3. Project-local SDK
     for sdk_ver in 15.5 14.0 11.3; do
         local local_sdk="$ROOT_DIR/.sdk/MacOSX${sdk_ver}.sdk"
         if [ -d "$local_sdk" ]; then
@@ -122,6 +133,7 @@ find_darwin_sdk() {
             return 0
         fi
     done
+    # 4. Common system paths
     for sdk_ver in 15.5 14.0 11.3; do
         for p in /opt/MacOSX-SDKs/MacOSX${sdk_ver}.sdk \
                  /opt/macOS-SDKs/MacOSX${sdk_ver}.sdk \
@@ -132,6 +144,7 @@ find_darwin_sdk() {
             fi
         done
     done
+    # 5. Xcode default
     local xcode_sdk="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
     if [ -d "$xcode_sdk" ]; then
         echo "$xcode_sdk"

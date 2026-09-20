@@ -153,7 +153,6 @@ for plat in $PLATFORMS; do
     local_goos="${GOOS_MAP[$plat]}"
     archive_name="dbridge_${VERSION}_${plat}"
 
-    local archive_file
     if [ "$local_goos" = "windows" ]; then
         archive_file="$ROOT_DIR/dist/release/${archive_name}.zip"
     else
