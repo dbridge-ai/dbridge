@@ -1611,7 +1611,7 @@ const SQLEditor: React.FC = () => {
       {renderTabContent(tab)}
     </div>,
   };
-}), [tabs, dataSources]);
+}), [tabs, dataSources, tabSchemaListCache, tabDbListCache]);
 
   const handleDeleteTableOrView = async () => {
     const { schema, name, isView } = deleteTarget;
