@@ -347,8 +347,8 @@ const DataSources: React.FC = () => {
   ];
 
   return (
-    <div>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
         <h2 style={{ margin: 0 }}>{tr('nav.datasources')}</h2>
         <Space>
           <Button icon={<DownloadOutlined />} onClick={handleExport}>
@@ -367,17 +367,19 @@ const DataSources: React.FC = () => {
         </Space>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="id"
-        loading={loading}
-        pagination={{
-          showSizeChanger: true,
-          showTotal: (total) => `${tr('common.total')} ${total} ${tr('common.rows')}`,
-          pageSizeOptions: ['10', '20', '50'],
-        }}
-      />
+      <div style={{ flex: 1, overflow: 'auto' }}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
+          pagination={{
+            showSizeChanger: true,
+            showTotal: (total) => `${tr('common.total')} ${total} ${tr('common.rows')}`,
+            pageSizeOptions: ['10', '20', '50'],
+          }}
+        />
+      </div>
 
       <Modal
         title={editingId ? tr('datasource.edit') : tr('datasource.add')}

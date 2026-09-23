@@ -212,7 +212,10 @@ const MainLayout: React.FC = () => {
             padding: 20,
             background: '#fff',
             borderRadius: 4,
-            minHeight: 'calc(100vh - 82px)',
+            height: 'calc(100vh - 82px)',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <Outlet />
