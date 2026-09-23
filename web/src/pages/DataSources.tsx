@@ -23,6 +23,8 @@ import {
   DownloadOutlined,
   UploadOutlined,
   CodeOutlined,
+  EditOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { dsAPI } from '../api';
@@ -313,23 +315,20 @@ const DataSources: React.FC = () => {
     {
       title: tr('datasource.tableAction'),
       key: 'action',
-      width: 200,
+      width: 140,
       render: (_: any, record: DataSource) => (
-        <Space size={8}>
-          <Link to={`/query?ds=${encodeURIComponent(record.id)}`} style={{ color: '#20a53a' }}>
-            <CodeOutlined /> {tr('datasource.query')}
-          </Link>
-          <span style={{ color: '#ddd' }}>|</span>
-          <a
-            style={{ color: '#20a53a' }}
-            onClick={() => handleOpenModal(record)}
-          >
-            {tr('datasource.edit')}
-          </a>
-          <span style={{ color: '#ddd' }}>|</span>
+        <Space size={4}>
+          <Tooltip title={tr('datasource.query')}>
+            <Link to={`/query?ds=${encodeURIComponent(record.id)}`}>
+              <Button type="text" size="small" icon={<CodeOutlined />} style={{ color: '#20a53a' }} />
+            </Link>
+          </Tooltip>
+          <Tooltip title={tr('datasource.edit')}>
+            <Button type="text" size="small" icon={<EditOutlined />} style={{ color: '#20a53a' }} onClick={() => handleOpenModal(record)} />
+          </Tooltip>
           {record.is_system ? (
             <Tooltip title={tr('datasource.cannotDeleteSystem')}>
-              <span style={{ color: '#ccc', cursor: 'not-allowed' }}>{tr('datasource.delete')}</span>
+              <Button type="text" size="small" icon={<DeleteOutlined />} disabled />
             </Tooltip>
           ) : (
             <Popconfirm
@@ -338,7 +337,9 @@ const DataSources: React.FC = () => {
               okText={tr('common.okText')}
               cancelText={tr('common.cancelText')}
             >
-              <a style={{ color: '#e74c3c' }}>{tr('datasource.delete')}</a>
+              <Tooltip title={tr('datasource.delete')}>
+                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: '#e74c3c' }} />
+              </Tooltip>
             </Popconfirm>
           )}
         </Space>
