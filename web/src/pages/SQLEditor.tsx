@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next';
 import {
   Select, Button, Table, message, Card, Space, Spin, Empty, Tooltip, Input, Dropdown, Modal,
-  Tabs, Form, Radio, Checkbox, Popconfirm, Tag, Alert, Typography, List,
+  Tabs, Form, Radio, Popconfirm, Tag, Alert, Typography, List,
 } from 'antd';
 import Editor, { loader } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
@@ -24,6 +24,7 @@ import {
   DatabaseOutlined,
   TableOutlined,
   EyeOutlined,
+  EditOutlined,
   FolderOutlined,
   PlusOutlined,
   CodeOutlined,
@@ -188,7 +189,7 @@ const SQLEditor: React.FC = () => {
         colTypes[k] = columnMeta[k]?.type || '';
       }
       const sql = gen.insertQuery(schema, rowAdd.tableName, filledKeys, valuesObj, colTypes);
-      await queryAPI.executeDML({ data_source_id: ds, sql, schema: tab.schema || currentSchema || undefined, database: tab.database || currentDatabase || undefined });
+      await queryAPI.executeDML({ data_source_id: ds, sql, schema: tab.schema || currentSchema || undefined, database: tab.database || undefined });
       message.success(tr('query.addSuccess'));
       setRowAdd({ open: false, tab: null, tableName: '', pkColumn: null });
       addForm.resetFields();
@@ -212,7 +213,7 @@ const SQLEditor: React.FC = () => {
     const whereClause = `${gen.quoteIdent(pkCol)} = ${gen.formatValue(String(pkVal), columnMeta[pkCol]?.type)}`;
     const sql = gen.deleteQuery(schema, t.table, whereClause);
     try {
-      await queryAPI.executeDML({ data_source_id: ds, sql, schema: t.schema || currentSchema || undefined, database: t.database || currentDatabase || undefined });
+      await queryAPI.executeDML({ data_source_id: ds, sql, schema: t.schema || currentSchema || undefined, database: t.database || undefined });
       message.success(tr('query.deleteSuccess'));
       if (tab?.type === 'table') loadTableTab(tab.id, tab.page, tab.pageSize);
     } catch (err: any) {
@@ -240,7 +241,7 @@ const SQLEditor: React.FC = () => {
     const whereClause = `${gen.quoteIdent(pkCol)} IN (${pkVals})`;
     const sql = gen.deleteQuery(schema, t.table, whereClause);
     try {
-      await queryAPI.executeDML({ data_source_id: ds, sql, schema: t.schema || currentSchema || undefined, database: t.database || currentDatabase || undefined });
+      await queryAPI.executeDML({ data_source_id: ds, sql, schema: t.schema || currentSchema || undefined, database: t.database || undefined });
       message.success(tr('query.batchDeleteSuccess', { n: selectedRows.length }));
       setSelectedRows([]);
       if (t?.type === 'table') loadTableTab(t.id, t.page, t.pageSize);
@@ -846,7 +847,7 @@ const SQLEditor: React.FC = () => {
     if (!keys.length || !treeDSRef.current) return;
     const parsed = parseNodeKey(String(keys[0]));
     if (parsed.kind === 'other') return;
-    openTableTab(parsed.schema, parsed.name, parsed.kind === 'view');
+    openTableTab(parsed.schema, parsed.name, parsed.kind === 'view', parsed.database, treeDSRef.current);
   };
 
   // --- Open schema list tab (when clicking database/schema node) ---
@@ -1229,47 +1230,37 @@ const SQLEditor: React.FC = () => {
     });
     const isTableTab = tab.type === 'table';
     const isReadOnly = isTableTab && (tab as TableTab).isView;
-    if (isTableTab && !isReadOnly) {
-      columns.unshift({
-        title: (
-          <Checkbox
-            checked={dataSource.length > 0 && selectedRows.length === dataSource.length}
-            indeterminate={selectedRows.length > 0 && selectedRows.length < dataSource.length}
-            onChange={(e) => setSelectedRows(e.target.checked ? [...dataSource] : [])}
-          />
-        ), key: 'select', width: 40, fixed: 'left' as const,
-        render: (_: any, record: Record<string, any>) => (
-          <Checkbox
-            checked={selectedRows.some(r => r.key === record.key)}
-            onChange={(e) => { e.target.checked ? setSelectedRows([...selectedRows, record]) : setSelectedRows(selectedRows.filter(r => r.key !== record.key)); }}
-          />
-        ),
-      });
-    }
+    const rowSelection = (isTableTab && !isReadOnly) ? {
+      selectedRowKeys: selectedRows.map(r => r.key),
+      onChange: (_: any, selectedRowsData: any[]) => setSelectedRows(selectedRowsData),
+    } : undefined;
     columns.push({
-      title: tr('datasource.tableAction'), key: 'action', width: 160, fixed: 'right' as const,
+      title: tr('datasource.tableAction'), key: 'action', width: 120, fixed: 'right' as const,
       render: (_: any, record: Record<string, any>) => (
         <Space size={4}>
-          <Button type="link" size="small" onClick={() => {
-            setRowDetail({ open: true, data: record, columns: result.columns });
-          }}>{tr('query.view')}</Button>
+          <Tooltip title={tr('query.view')}>
+            <Button type="text" size="small" icon={<EyeOutlined />} style={{ color: '#1890ff' }} onClick={() => {
+              setRowDetail({ open: true, data: record, columns: result.columns });
+            }} />
+          </Tooltip>
           {!isReadOnly && (
-            <Button type="link" size="small" onClick={async () => {
-              if (isTableTab) {
-                const t = tab as any;
-                // Use cached structure if available, otherwise fetch
-                const cacheKey = `${t.dsId }:${t.schema || ''}:${t.table || ''}`;
-                if (tableStructureCache[cacheKey]) {
-                  const { columns: cols } = tableStructureCache[cacheKey];
-                  const meta: Record<string, { type: string; nullable: boolean; key: string; comment: string }> = {};
-                  cols.forEach((c: any) => {
-                    meta[c.name] = { type: c.type || '', nullable: c.nullable ?? true, key: c.key || '', comment: c.comment || '' };
-                  });
-                  setColumnMeta(prev => ({ ...prev, ...meta }));
+            <Tooltip title={tr('query.edit')}>
+              <Button type="text" size="small" icon={<EditOutlined />} style={{ color: '#20a53a' }} onClick={async () => {
+                if (isTableTab) {
+                  const t = tab as any;
+                  const cacheKey = `${t.dsId }:${t.schema || ''}:${t.table || ''}`;
+                  if (tableStructureCache[cacheKey]) {
+                    const { columns: cols } = tableStructureCache[cacheKey];
+                    const meta: Record<string, { type: string; nullable: boolean; key: string; comment: string }> = {};
+                    cols.forEach((c: any) => {
+                      meta[c.name] = { type: c.type || '', nullable: c.nullable ?? true, key: c.key || '', comment: c.comment || '' };
+                    });
+                    setColumnMeta(prev => ({ ...prev, ...meta }));
+                  }
                 }
-              }
-              setRowEdit({ open: true, data: record, columns: result.columns, tab }); editForm.setFieldsValue(record);
-            }}>{tr('query.edit')}</Button>
+                setRowEdit({ open: true, data: record, columns: result.columns, tab }); editForm.setFieldsValue(record);
+              }} />
+            </Tooltip>
           )}
           {isTableTab && !isReadOnly && (
             <Popconfirm title={tr('query.confirmDelete')} onConfirm={async () => {
@@ -1284,7 +1275,9 @@ const SQLEditor: React.FC = () => {
               if (!pk) { message.warning(tr('query.noPK')); return; }
               handleDeleteRow(record, pk, tab);
             }}>
-              <Button type="link" size="small" danger>{tr('query.delete')}</Button>
+              <Tooltip title={tr('query.delete')}>
+                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: '#e74c3c' }} />
+              </Tooltip>
             </Popconfirm>
           )}
         </Space>
@@ -1294,7 +1287,8 @@ const SQLEditor: React.FC = () => {
     return (
       <>
       <Table
-        columns={columns} dataSource={dataSource}
+        columns={columns} dataSource={dataSource} rowKey="key"
+        rowSelection={rowSelection}
         scroll={{ x: 'max-content' }} size="small" tableLayout="fixed"
         loading={tab.loading}
         pagination={{
@@ -1611,7 +1605,7 @@ const SQLEditor: React.FC = () => {
       {renderTabContent(tab)}
     </div>,
   };
-}), [tabs, dataSources, tabSchemaListCache, tabDbListCache]);
+}), [tabs, dataSources, tabSchemaListCache, tabDbListCache, selectedRows]);
 
   const handleDeleteTableOrView = async () => {
     const { schema, name, isView } = deleteTarget;
@@ -1624,13 +1618,13 @@ const SQLEditor: React.FC = () => {
       sql = gen.dropTable(schema, name, false);
     }
     try {
-      await queryAPI.executeDDL({ data_source_id: treeDSRef.current || '', sql, schema: schema || undefined, database: deleteTarget.database || currentDatabase || undefined });
+      await queryAPI.executeDDL({ data_source_id: treeDSRef.current || '', sql, schema: schema || undefined, database: deleteTarget.database || undefined });
       message.success(`${tr('query.deleted')}: ${name}`);
       setDeleteTarget({ open: false, schema: '', name: '', isView: false });
       setDeleteConfirmName('');
       // Refresh tree with targeted refresh
       const objectType = isView ? 'view' : 'table';
-      setTreeRefreshKey({ type: 'object-created', objectType, schema, database: deleteTarget.database || currentDatabase });
+      setTreeRefreshKey({ type: 'object-created', objectType, schema, database: deleteTarget.database });
     } catch (err: any) {
       message.error(err?.response?.data?.message || tr('query.deleteFailed'));
     }
@@ -1937,7 +1931,7 @@ const SQLEditor: React.FC = () => {
               }
               const schema = t.schema || currentSchema || '';
               const sql = gen.updateQuery(schema, t.table, sets, where, colTypes);
-              await queryAPI.executeDML({ data_source_id: ds, sql, schema: schema || undefined, database: t.database || currentDatabase || undefined });
+              await queryAPI.executeDML({ data_source_id: ds, sql, schema: schema || undefined, database: t.database || undefined });
               message.success(tr('query.updateSuccess'));
               setRowEdit({ open: false, data: null, columns: [], tab: null });
               if (tab?.type === 'table') loadTableTab(tab.id, (tab as any).page, (tab as any).pageSize);

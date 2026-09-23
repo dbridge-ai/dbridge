@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -66,6 +67,7 @@ func InitFromDB(db *gorm.DB) error {
 		if err := seedBindings(db); err != nil {
 			log.Printf("storage: seed bindings: %v", err)
 		}
+		ensureBindingDirectories(db, manager)
 	}
 
 	return nil
@@ -282,6 +284,46 @@ func seedBindings(db *gorm.DB) error {
 		}
 	}
 	return nil
+}
+
+// ensureBindingDirectories 检查每个业务绑定的基础目录是否存在，不存在则自动创建。
+func ensureBindingDirectories(db *gorm.DB, manager *ProfileManager) {
+	type bindingRow struct {
+		ModuleCode  string
+		ProfileCode string
+		BasePath    string
+	}
+	var bindings []bindingRow
+	if err := db.Table("storage_bindings").
+		Select("module_code, profile_code, base_path").
+		Find(&bindings).Error; err != nil {
+		log.Printf("storage: query bindings for directory check: %v", err)
+		return
+	}
+
+	ctx := context.Background()
+	for _, b := range bindings {
+		if b.BasePath == "" {
+			continue
+		}
+		fs := manager.GetByCode(b.ProfileCode)
+		if fs == nil {
+			log.Printf("storage: binding %q references unknown profile %q, skip directory creation", b.ModuleCode, b.ProfileCode)
+			continue
+		}
+		exists, err := fs.Exists(ctx, b.BasePath)
+		if err != nil {
+			log.Printf("storage: check binding dir %q for module %q: %v", b.BasePath, b.ModuleCode, err)
+			continue
+		}
+		if !exists {
+			if err := fs.Mkdir(ctx, b.BasePath); err != nil {
+				log.Printf("storage: create binding dir %q for module %q: %v", b.BasePath, b.ModuleCode, err)
+			} else {
+				log.Printf("storage: created binding directory %q for module %q", b.BasePath, b.ModuleCode)
+			}
+		}
+	}
 }
 
 // Reset 重置（仅测试用）

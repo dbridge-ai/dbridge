@@ -170,8 +170,8 @@ const AuditLogs: React.FC = () => {
   };
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexShrink: 0 }}>
         <h2 style={{ fontSize: 18, margin: 0 }}>{tr('nav.auditLogs')}</h2>
         <Space>
           <Select style={{ width: 110 }} value={filterModule || undefined} onChange={v => { setFilterModule(v || ''); setPage(1); }} options={moduleOptions} placeholder={tr('audit.moduleLabel')} />
@@ -179,25 +179,27 @@ const AuditLogs: React.FC = () => {
             options={[{ label: tr('audit.resultAll'), value: '' }, { label: tr('audit.resultSuccess'), value: 'success' }, { label: tr('audit.resultFailure'), value: 'failure' }]} placeholder={tr('audit.resultLabel')} />
         </Space>
       </div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="id"
-        loading={loading}
-        expandable={{
-          expandedRowRender,
-          rowExpandable: (record) => !!record.details,
-        }}
-        pagination={{
-          current: page,
-          pageSize: pageSize,
-          total: total,
-          showSizeChanger: true,
-          showTotal: (total) => `${tr('common.total')} ${total} ${tr('common.rows')}`,
-          pageSizeOptions: ['10', '20', '50'],
-          onChange: handlePageChange,
-        }}
-      />
+      <div style={{ flex: 1, overflow: 'auto' }}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowKey="id"
+          loading={loading}
+          expandable={{
+            expandedRowRender,
+            rowExpandable: (record) => !!record.details,
+          }}
+          pagination={{
+            current: page,
+            pageSize: pageSize,
+            total: total,
+            showSizeChanger: true,
+            showTotal: (total) => `${tr('common.total')} ${total} ${tr('common.rows')}`,
+            pageSizeOptions: ['10', '20', '50'],
+            onChange: handlePageChange,
+          }}
+        />
+      </div>
     </div>
   );
 };

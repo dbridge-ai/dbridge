@@ -123,7 +123,7 @@ const MainLayout: React.FC = () => {
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', alignItems: 'stretch' }}>
       <Sider
         trigger={null}
         collapsible
@@ -133,6 +133,8 @@ const MainLayout: React.FC = () => {
         style={{
           background: '#3a3f4a',
           boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
+          height: 'auto',
+          minHeight: '100vh',
         }}
       >
         <div
@@ -163,7 +165,7 @@ const MainLayout: React.FC = () => {
           style={{ background: '#3a3f4a', borderRight: 0 }}
         />
       </Sider>
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Header
           style={{
             height: 50,
@@ -212,7 +214,7 @@ const MainLayout: React.FC = () => {
             padding: 20,
             background: '#fff',
             borderRadius: 4,
-            height: 'calc(100vh - 82px)',
+            flex: 1,
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
