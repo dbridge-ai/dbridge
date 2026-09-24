@@ -476,7 +476,7 @@ const ExportTasks: React.FC = () => {
       />
 
       {/* Export task modal */}
-      <Modal title={tr('exportTask.newExport')} open={exportModalOpen} onOk={handleCreateExport} onCancel={() => setExportModalOpen(false)} okText={tr('common.create')} cancelText={tr('common.cancelText')} width={800}>
+      <Modal title={tr('exportTask.newExport')} open={exportModalOpen} onOk={handleCreateExport} onCancel={() => setExportModalOpen(false)} okText={tr('common.create')} cancelText={tr('common.cancelText')} width={720}>
         <Form form={form} layout="vertical" initialValues={{ export_format: 'sql', batch_size: 500, export_scope: 'tables', export_content: 'all', export_include_structure: true, export_include_data: true }}>
           <Row gutter={16}>
             <Col span={12}>
@@ -579,7 +579,7 @@ const ExportTasks: React.FC = () => {
       </Modal>
 
       {/* Import task modal */}
-      <Modal title={te('importModalTitle')} open={importModalOpen} onOk={handleCreateImport} onCancel={() => setImportModalOpen(false)} okText={te('createBtn')} cancelText={te('cancel')} width={700}>
+      <Modal title={te('importModalTitle')} open={importModalOpen} onOk={handleCreateImport} onCancel={() => setImportModalOpen(false)} okText={te('createBtn')} cancelText={te('cancel')} width={720}>
         <Form form={importForm} layout="vertical" initialValues={{ import_source: 'upload', import_strategy: 'fail', import_content: 'all', skip_safety_check: false }}>
           <Form.Item name="name" label={te('taskName')} rules={[{ required: true }]}>
             <Input placeholder={te('taskNamePlaceholder')} />
@@ -635,7 +635,7 @@ const ExportTasks: React.FC = () => {
           ]} />
 
           {/* File Browser Modal */}
-          <Modal title={te('selectFile')} open={browseOpen} onCancel={() => setBrowseOpen(false)} footer={null} width={700}>
+          <Modal title={te('selectFile')} open={browseOpen} onCancel={() => setBrowseOpen(false)} footer={null} width={720}>
             {/* Breadcrumb navigation */}
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12, minHeight: 32 }}>
               <div style={{ flex: 1, overflow: 'hidden' }}>

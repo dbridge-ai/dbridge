@@ -105,7 +105,7 @@ const ImportModal: React.FC<Props> = ({ open, onClose }) => {
       title={t('importSQL')}
       open={open}
       onCancel={onClose}
-      width={800}
+      width={720}
       footer={
         <Space>
           <Button onClick={onClose}>{t('close')}</Button>

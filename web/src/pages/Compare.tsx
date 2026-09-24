@@ -1265,7 +1265,7 @@ const Compare: React.FC = () => {
                 </Button>,
               ]
         }
-        width={700}
+        width={720}
       >
         <Spin spinning={structSyncLoading}>
           {structSyncResult ? (
@@ -1327,7 +1327,7 @@ const Compare: React.FC = () => {
         onOk={handleSyncData}
         okText={tr('compare.executeSync')}
         okButtonProps={{ loading: dataSyncLoading }}
-        width={700}
+        width={720}
       >
         <div style={{ marginBottom: 16 }}>
           <Text strong>{tr('compare.syncTable')} </Text>

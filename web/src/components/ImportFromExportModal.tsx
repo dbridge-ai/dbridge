@@ -68,7 +68,7 @@ const ImportFromExportModal: React.FC<Props> = ({ open, onClose, onSuccess, pres
       confirmLoading={loading}
       okText={t('create')}
       cancelText={t('cancel')}
-      width={500}
+      width={480}
     >
       <Form form={form} layout="vertical">
         <Form.Item name="name" label={t('taskName')} rules={[{ required: true }]}>

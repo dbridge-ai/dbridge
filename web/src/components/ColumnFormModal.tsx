@@ -111,7 +111,7 @@ const ColumnFormModal: React.FC<Props> = ({
       onCancel={onCancel}
       onOk={() => form.submit()}
       zIndex={1050}
-      width={560}
+      width={600}
       destroyOnHidden
     >
       {isReserved && (

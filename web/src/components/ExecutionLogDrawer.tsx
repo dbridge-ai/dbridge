@@ -87,7 +87,7 @@ const ExecutionLogDrawer: React.FC<Props> = ({ open, taskId, execId, onClose }) 
       title={`${t('executionLog')} #${execId.slice(0, 8)}`}
       open={open}
       onClose={onClose}
-      width={700}
+      width={720}
       footer={
         <div style={{ textAlign: 'right' }}>
           {logFilePath && (

@@ -22,10 +22,10 @@
   --db-danger-border: #FFCCC7;
   --db-danger-text: #CF1322;
 
-  /* --- 中性灰阶（light） --- */
+  /* --- 中性灰阶（light，对比度实测修正 F2） --- */
   --db-text-primary: #333333;
   --db-text-secondary: #666666;
-  --db-text-tertiary: #999999;
+  --db-text-tertiary: #6E6E6E; /* 原 #999999 白底仅 2.85:1 */
   --db-body-bg: #F0F2F5;
   --db-card-bg: #FFFFFF;
   --db-elevated-bg: #FFFFFF;
@@ -40,6 +40,7 @@
   --db-primary: #20A53A;
   --db-primary-hover: #23B640;
   --db-primary-active: #1B8C31;
+  --db-primary-text: #1A8730; /* F1 文字/链接专用档：白底 ≥4.5:1 */
   --db-primary-bg: #F6FFED;
   --db-primary-border: #B7EB8F;
 
@@ -47,13 +48,17 @@
   --db-sider-bg: #3A3F4A;
   --db-sider-sub-bg: #33383F;
 
+  /* --- 图表辅助色（= tokens.ts metricBarColors / dbTypeColors 的变量形式） --- */
+  --db-chart-purple: #8B6FE0;
+  --db-chart-cyan: #2FA8A0;
+
   /* --- 阴影 --- */
   --db-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
   --db-shadow-modal: 0 6px 16px rgba(0, 0, 0, 0.08);
 
-  /* --- 链接 --- */
-  --db-link: var(--db-primary);
-  --db-link-hover: var(--db-primary-hover);
+  /* --- 链接（使用文字专用档，保证对比度） --- */
+  --db-link: var(--db-primary-text);
+  --db-link-hover: var(--db-primary);
 }
 
 /* ===== 全局基础样式（从 index.css 迁移） ===== */

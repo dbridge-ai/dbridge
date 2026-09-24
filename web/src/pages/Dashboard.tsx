@@ -56,9 +56,9 @@ const Dashboard: React.FC = () => {
             </Card>
           </Col>
           <Col span={6}>
-            <Card hoverable style={{ borderLeft: '3px solid #722ed1' }} styles={{ body: { padding: '20px 24px' } }}>
+            <Card hoverable style={{ borderLeft: '3px solid var(--db-chart-purple)' }} styles={{ body: { padding: '20px 24px' } }}>
               <Statistic title={<span style={{ color: 'var(--db-text-secondary)' }}>{tr('dashboards.queryCount')}</span>}
-                value={stats?.query_count ?? 0} prefix={<CodeOutlined style={{ color: '#722ed1' }} />}
+                value={stats?.query_count ?? 0} prefix={<CodeOutlined style={{ color: 'var(--db-chart-purple)' }} />}
                 valueStyle={{ color: 'var(--db-text-primary)', fontWeight: 600 }} />
             </Card>
           </Col>

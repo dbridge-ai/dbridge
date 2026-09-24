@@ -1594,7 +1594,7 @@ const SQLEditor: React.FC = () => {
     label: (
       <Tooltip title={tooltipText}>
       <span>
-        {tab.type === 'table' ? <TableOutlined style={{ marginRight: 4 }} /> : tab.type === 'schema_list' ? <FolderOutlined style={{ marginRight: 4 }} /> : tab.type === 'object' ? <CodeOutlined style={{ marginRight: 4, color: '#722ed1' }} /> : <CodeOutlined style={{ marginRight: 4 }} />}
+        {tab.type === 'table' ? <TableOutlined style={{ marginRight: 4 }} /> : tab.type === 'schema_list' ? <FolderOutlined style={{ marginRight: 4 }} /> : tab.type === 'object' ? <CodeOutlined style={{ marginRight: 4, color: 'var(--db-chart-purple)' }} /> : <CodeOutlined style={{ marginRight: 4 }} />}
         {tab.title}
         {tab.loading && <Spin size="small" style={{ marginLeft: 4 }} />}
       </span>
@@ -1847,7 +1847,7 @@ const SQLEditor: React.FC = () => {
 
       {/* Row Detail Modal */}
       <Modal title={tr('query.rowDetail')} open={rowDetail.open} onCancel={() => setRowDetail({ open: false, data: null, columns: [] })}
-        footer={null} width={800}
+        footer={null} width={720}
       >
         {rowDetail.data && (
           <Table
@@ -1972,7 +1972,7 @@ const SQLEditor: React.FC = () => {
       <Modal title={tr('query.addRow')} open={rowAdd.open}
         onCancel={() => { setRowAdd({ open: false, tab: null, tableName: '', pkColumn: null }); addForm.resetFields(); }}
         onOk={() => addForm.submit()}
-        okText={tr('query.add')} width={500}
+        okText={tr('query.add')} width={480}
       >
         <Form form={addForm} layout="vertical" onFinish={handleAddRow}>
           {rowAdd.tab && (rowAdd.tab.result?.columns || []).map((col: string) => {
@@ -2025,7 +2025,7 @@ const SQLEditor: React.FC = () => {
             {tr('common.save')}
           </Button>,
         ]} 
-        width={800}
+        width={720}
       >
         <Spin spinning={viewDefLoading}>
           <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
@@ -2048,7 +2048,7 @@ const SQLEditor: React.FC = () => {
         onCancel={() => setExportModalOpen(false)}
         okText={tr('query.createAndRun')}
         cancelText={tr('common.cancelText')}
-        width={450}
+        width={480}
       >
         <Form form={exportForm} layout="vertical">
           <Form.Item label={tr('query.exportContent')} name="export_content" initialValue="all">

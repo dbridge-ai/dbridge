@@ -22,11 +22,15 @@ export const semanticSurface = {
 
 export const terminal = { bg: '#1E1E1E', fg: '#D4D4D4' };
 
+// 对比度实测修正（WCAG AA，见 ui-unification-design.md 附录 C / v2.5 修订 F2）：
+// - light textTertiary：#999999 在白卡仅 2.85:1 → #6E6E6E
+// - dark textTertiary：#6E757D 在卡片上仅 3.86:1（#7C848C 也不够）→ #8A8F96（对 body/卡片/浮层均 ≥4.5:1）
+// - dark disabled：#5A6167 仅 2.86:1 → #666C72
 export const neutral = {
   light: {
     text: '#333333',
     textSecondary: '#666666',
-    textTertiary: '#999999',
+    textTertiary: '#6E6E6E',
     bodyBg: '#F0F2F5',
     cardBg: '#FFFFFF',
     border: '#E8E8E8',
@@ -39,21 +43,30 @@ export const neutral = {
   dark: {
     text: '#E6E8EB',
     textSecondary: '#A5ABB3',
-    textTertiary: '#6E757D',
+    textTertiary: '#8A8F96',
     bodyBg: '#14171A',
     cardBg: '#1C2025',
     border: '#2E343B',
     borderLight: '#262C33',
     tableHeaderBg: '#22272E',
     rowHoverBg: '#262C33',
-    disabled: '#5A6167',
+    disabled: '#666C72',
     mask: 'rgba(0,0,0,.65)',
   },
 };
 
 export const fontSize = { xs: 12, sm: 13, base: 14, md: 16, lg: 18, xl: 24 };
 export const spacing = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24 };
-export const radius = { control: 4, container: 8 };
+
+// 圆角随端变（产品决策 D5）：不随 accent 切换，由 edition 决定
+export const radiusByEdition: Record<string, { control: number; container: number }> = {
+  web:       { control: 4, container: 8 },
+  community: { control: 4, container: 8 },
+  desktop:   { control: 6, container: 8 },
+};
+// 兼容别名（= web/community）
+export const radius = radiusByEdition.web;
+
 export const modalWidth = { xs: 400, sm: 480, md: 600, lg: 720, xl: 900 };
 export const drawerWidth = { detail: 720, wide: 1000 };
 export const fontFamily =

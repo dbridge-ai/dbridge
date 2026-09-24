@@ -134,7 +134,7 @@ const SyncDialog: React.FC<SyncDialogProps> = ({ open, profiles, sourceProfile, 
       title={t('sync.syncTo')}
       open={open}
       onCancel={onClose}
-      width={680}
+      width={720}
       footer={
         <Space>
           <Button onClick={onClose}>{t('common.cancel')}</Button>

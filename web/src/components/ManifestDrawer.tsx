@@ -83,7 +83,7 @@ const ManifestDrawer: React.FC<Props> = ({ open, execId, onClose }) => {
       title={t('exportDetails')}
       open={open}
       onClose={onClose}
-      width={800}
+      width={720}
     >
       {loading ? (
         <div>{t('loading')}</div>

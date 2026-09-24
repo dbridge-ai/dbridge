@@ -241,7 +241,7 @@ const CreateTableModal: React.FC<CreateTableModalProps> = ({
       confirmLoading={loading}
       okText={tr("common.create")}
       cancelText={tr("common.cancel")}
-      width={800}
+      width={720}
       destroyOnHidden
     >
       <Form form={form} layout="vertical" style={{ marginTop: 16 }}>

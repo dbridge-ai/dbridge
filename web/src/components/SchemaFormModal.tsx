@@ -173,7 +173,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
       confirmLoading={loading}
       okText={t('schemaForm.execute')}
       cancelText={t('schemaForm.cancel')}
-      width={560}
+      width={600}
       destroyOnHidden
     >
       <Form form={form} layout="vertical" style={{ marginTop: 16 }}>

@@ -76,7 +76,7 @@ const CreateViewModal: React.FC<CreateViewModalProps> = ({
       confirmLoading={loading}
       okText={isEdit ? tr('dbManage.updateView') : tr('common.create')}
       cancelText={tr("common.cancel")}
-      width={700}
+      width={720}
       destroyOnHidden
     >
       <Form form={form} layout="vertical" style={{ marginTop: 16 }}>

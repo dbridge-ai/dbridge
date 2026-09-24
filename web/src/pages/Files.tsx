@@ -503,7 +503,7 @@ const FilesPage: React.FC = () => {
         onCancel={() => setTransferVisible(false)}
         confirmLoading={transferLoading}
         okText={transferMode === 'copy' ? t('transfer.copy') : t('transfer.move')}
-        width={560}
+        width={600}
       >
         <div style={{ marginBottom: 12 }}>
           <Text type="secondary">

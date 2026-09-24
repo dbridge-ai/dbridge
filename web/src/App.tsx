@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { App as AntdApp, ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import { useTranslation } from 'react-i18next';
@@ -43,6 +43,8 @@ const App: React.FC = () => {
       locale={antLocale}
       theme={theme}
     >
+      {/* antd App 容器：message/notification/Modal 静态方法的 hook 化前提（7.2 步骤①） */}
+      <AntdApp>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -67,6 +69,7 @@ const App: React.FC = () => {
           </Route>
         </Routes>
       </BrowserRouter>
+      </AntdApp>
     </ConfigProvider>
   );
 };
