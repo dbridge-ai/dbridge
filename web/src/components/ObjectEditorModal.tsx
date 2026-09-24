@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Spin, message } from 'antd';
 import Editor from '@monaco-editor/react';
 import { dsAPI } from '../api';
+import { useTheme } from '../theme/ThemeContext';
 
 interface ObjectEditorModalProps {
   open: boolean;
@@ -26,6 +27,7 @@ const ObjectEditorModal: React.FC<ObjectEditorModalProps> = ({
   onSuccess,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [ddl, setDdl] = useState('');
@@ -105,6 +107,7 @@ const ObjectEditorModal: React.FC<ObjectEditorModalProps> = ({
         <Editor
           height="100%"
           language="sql"
+          theme={mode === 'dark' ? 'vs-dark' : 'vs'}
           value={ddl}
           onChange={(v) => setDdl(v || '')}
           options={{

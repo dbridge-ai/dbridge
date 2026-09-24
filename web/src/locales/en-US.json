@@ -1502,5 +1502,16 @@
     "skippedBatches": "Skipped Batches",
     "unableLoadManifest": "Unable to load Manifest",
     "schemaLabel": "Schema"
+  },
+  "theme": {
+    "appearance": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "preset": "Theme Color",
+    "green": "Green",
+    "teal": "Teal",
+    "graphite": "Blue",
+    "indigo": "Purple",
+    "amber": "Amber"
   }
 }

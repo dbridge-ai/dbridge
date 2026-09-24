@@ -4,6 +4,7 @@ import { Modal, Form, Input, message, Alert } from 'antd';
 import Editor from '@monaco-editor/react';
 import { queryAPI } from '../api';
 import { getDialect } from '../utils/dialect';
+import { useTheme } from '../theme/ThemeContext';
 
 type CreateViewModalProps = {
   open: boolean;
@@ -23,6 +24,7 @@ const CreateViewModal: React.FC<CreateViewModalProps> = ({
   initialViewName, initialSql, onClose, onSuccess,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode: themeMode } = useTheme();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [sql, setSql] = useState('SELECT ...');
@@ -107,6 +109,7 @@ const CreateViewModal: React.FC<CreateViewModalProps> = ({
           <Editor
             height={250}
             defaultLanguage="sql"
+            theme={themeMode === 'dark' ? 'vs-dark' : 'vs'}
             value={sql}
             onChange={(v) => setSql(v || '')}
             options={{

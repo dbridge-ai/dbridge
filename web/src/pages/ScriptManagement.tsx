@@ -14,6 +14,7 @@ import type { MenuProps, TreeDataNode } from 'antd';
 import Editor from '@monaco-editor/react';
 import { scriptFsAPI } from '../api';
 import type { ScriptFileInfo } from '../api';
+import { useTheme } from '../theme/ThemeContext';
 
 const { Text } = Typography;
 
@@ -25,6 +26,7 @@ interface DirCache {
 
 const ScriptManagement: React.FC = () => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
 
   const [currentDir, setCurrentDir] = useState('');
   const [treeNodes, setTreeNodes] = useState<TreeDataNode[]>([]);
@@ -508,6 +510,7 @@ const ScriptManagement: React.FC = () => {
                 <Editor
                   height="100%"
                   defaultLanguage="sql"
+                  theme={mode === 'dark' ? 'vs-dark' : 'vs'}
                   value={content}
                   onChange={handleContentChange}
                   options={{

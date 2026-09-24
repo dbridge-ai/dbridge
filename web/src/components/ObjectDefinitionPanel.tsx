@@ -4,6 +4,7 @@ import { Spin, Empty, Button, Space, message } from 'antd';
 import { EditOutlined, CopyOutlined, ReloadOutlined } from '@ant-design/icons';
 import Editor from '@monaco-editor/react';
 import { dsAPI } from '../api';
+import { useTheme } from '../theme/ThemeContext';
 
 interface ObjectDefinitionPanelProps {
   dataSourceId: string;
@@ -23,6 +24,7 @@ const ObjectDefinitionPanel: React.FC<ObjectDefinitionPanelProps> = ({
   onEdit,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   const [loading, setLoading] = useState(true);
   const [definition, setDefinition] = useState('');
 
@@ -79,6 +81,7 @@ const ObjectDefinitionPanel: React.FC<ObjectDefinitionPanelProps> = ({
         <Editor
           height="100%"
           language="sql"
+          theme={mode === 'dark' ? 'vs-dark' : 'vs'}
           value={definition}
           loading={<Spin style={{ display: 'block', margin: '40px auto' }} />}
           options={{

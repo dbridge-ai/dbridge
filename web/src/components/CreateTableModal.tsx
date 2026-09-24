@@ -5,6 +5,7 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import Editor from '@monaco-editor/react';
 import { queryAPI, dsAPI } from '../api';
 import { dialectOf, getDialect } from '../utils/dialect';
+import { useTheme } from '../theme/ThemeContext';
 
 interface ColumnTypeInfo {
   name: string;
@@ -64,6 +65,7 @@ const CreateTableModal: React.FC<CreateTableModalProps> = ({
   open, dataSourceId, schema, dbType, database, onClose, onSuccess,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [columnTypes, setColumnTypes] = useState<ColumnTypeInfo[]>([]);
@@ -301,6 +303,7 @@ const CreateTableModal: React.FC<CreateTableModalProps> = ({
             <Editor
               height={180}
               defaultLanguage="sql"
+              theme={mode === 'dark' ? 'vs-dark' : 'vs'}
               value={ddl}
               options={{
                 minimap: { enabled: false },

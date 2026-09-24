@@ -4,6 +4,7 @@ import Editor from '@monaco-editor/react';
 import { useTranslation } from 'react-i18next';
 import { queryAPI } from '../api';
 import { dialectOf, getDialect } from '../utils/dialect';
+import { useTheme } from '../theme/ThemeContext';
 
 type SchemaFormModalProps = {
   open: boolean;
@@ -38,6 +39,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
   open, mode, dataSourceId, dbType, level, database, initValues, onClose, onSuccess,
 }) => {
   const { t } = useTranslation();
+  const { mode: themeMode } = useTheme();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [newName, setNewName] = useState('');
@@ -241,6 +243,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
               <Editor
                 height={120}
                 defaultLanguage="sql"
+                theme={themeMode === 'dark' ? 'vs-dark' : 'vs'}
                 value={ddl}
                 options={{
                   minimap: { enabled: false },

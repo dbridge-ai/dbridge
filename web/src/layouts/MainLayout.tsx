@@ -8,6 +8,7 @@ import {
   Space,
   Avatar,
   Dropdown,
+  Popover,
   message,
   Modal,
   Form,
@@ -27,7 +28,10 @@ import {
   FileOutlined,
   ExportOutlined,
   SwapOutlined,
+  SkinOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
+import { useTheme } from '../theme/ThemeContext';
 import { authAPI } from '../api';
 import logoSvg from '../assets/logo.svg';
 
@@ -39,6 +43,54 @@ const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
+  const { mode, preset, setMode, setPreset, allowedPresets } = useTheme();
+
+  const presetColors: Record<string, string> = {
+    green: '#20A53A', teal: '#0F8B8D', graphite: '#3B82F6',
+    indigo: '#4F46E5', amber: '#C77800',
+  };
+
+  const themePopoverContent = (
+    <div style={{ width: 200, padding: '4px 0' }}>
+      <div style={{ fontWeight: 600, marginBottom: 8 }}>{t('theme.appearance')}</div>
+      <Space style={{ marginBottom: 12 }}>
+        <Button
+          type={mode === 'light' ? 'primary' : 'default'}
+          size="small"
+          onClick={() => setMode('light')}
+        >
+          {t('theme.light')}
+        </Button>
+        <Button
+          type={mode === 'dark' ? 'primary' : 'default'}
+          size="small"
+          onClick={() => setMode('dark')}
+        >
+          {t('theme.dark')}
+        </Button>
+      </Space>
+      <div style={{ fontWeight: 600, marginBottom: 8 }}>{t('theme.preset')}</div>
+      <Space size={8} wrap>
+        {allowedPresets.map((p) => (
+          <div
+            key={p}
+            onClick={() => setPreset(p)}
+            title={t(`theme.${p}`)}
+            style={{
+              width: 28, height: 28, borderRadius: '50%',
+              background: presetColors[p] || '#999',
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: preset === p ? '2px solid var(--db-text-primary)' : '2px solid transparent',
+              transition: 'border-color 0.2s',
+            }}
+          >
+            {preset === p && <CheckOutlined style={{ color: '#fff', fontSize: 12 }} />}
+          </div>
+        ))}
+      </Space>
+    </div>
+  );
 
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const menuItems = useMemo(() => [
@@ -186,6 +238,9 @@ const MainLayout: React.FC = () => {
             style={{ fontSize: 16 }}
           />
           <Space>
+            <Popover content={themePopoverContent} trigger="click" placement="bottomRight">
+              <Button size="small" icon={<SkinOutlined />} />
+            </Popover>
             <Button
               size="small"
               icon={<TranslationOutlined />}

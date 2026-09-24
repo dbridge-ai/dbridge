@@ -11,6 +11,7 @@ import type { AlterChange } from '../api';
 import ColumnFormModal, { type ColumnFormValues } from './ColumnFormModal';
 import AlterTableModal from './AlterTableModal';
 import { dialectOf } from '../utils/dialect';
+import { useTheme } from '../theme/ThemeContext';
 
 const { Text } = Typography;
 
@@ -83,6 +84,7 @@ const TableStructureDrawer: React.FC<Props> = ({
   open, dataSourceId, dataSourceName, dbType, schema, table, isView, readOnly, database, onClose, onRefreshTree,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   const [loading, setLoading] = useState(false);
   const [structure, setStructure] = useState<FullStructure | null>(null);
 
@@ -376,6 +378,7 @@ const TableStructureDrawer: React.FC<Props> = ({
           <Editor
             height={500}
             defaultLanguage="sql"
+            theme={mode === 'dark' ? 'vs-dark' : 'vs'}
             value={structure.ddl || '-- 无 DDL'}
             options={{
               minimap: { enabled: false },

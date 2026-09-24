@@ -38,10 +38,16 @@ export function buildAntdTheme(
       // 圆角随端变（D5）
       borderRadius: radiusByEdition[currentEdition].control,
       colorBgLayout: n.bodyBg,
+      colorBgContainer: n.cardBg,
+      colorBgElevated: n.cardBg,
+      colorBorder: n.border,
+      colorBorderSecondary: n.borderLight,
       fontFamily,
       fontSize: fontSize.base,
       colorText: n.text,
       colorTextSecondary: n.textSecondary,
+      colorTextTertiary: n.textTertiary,
+      colorTextQuaternary: n.disabled,
       controlHeight: 32,
     },
     components: {
@@ -57,6 +63,7 @@ export function buildAntdTheme(
       },
       Card: {
         paddingLG: spacing.lg,
+        colorBgContainer: n.cardBg,
       },
       Modal: {
         ...modalDefaults,
@@ -69,6 +76,11 @@ export function buildAntdTheme(
         darkItemSelectedBg: p.primary,
         darkItemSelectedColor: '#fff',
         darkSubMenuItemBg: p.siderSubBg,
+      },
+      Select: {
+        optionSelectedBg: p.primary,
+        optionSelectedColor: '#fff',
+        optionActiveBg: n.rowHoverBg,
       },
       Layout: {
         siderBg: p.siderBg,

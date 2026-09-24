@@ -1502,5 +1502,16 @@
     "skippedBatches": "跳过的批次",
     "unableLoadManifest": "无法加载 Manifest",
     "schemaLabel": "Schema"
+  },
+  "theme": {
+    "appearance": "外观",
+    "light": "浅色",
+    "dark": "深色",
+    "preset": "主题色",
+    "green": "绿色",
+    "teal": "青色",
+    "graphite": "蓝色",
+    "indigo": "紫色",
+    "amber": "琥珀"
   }
 }

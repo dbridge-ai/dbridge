@@ -4,6 +4,7 @@ import { Modal, Alert, Space, Button, Switch, Typography, Divider, message } fro
 import Editor from '@monaco-editor/react';
 import type { AlterChange } from '../api';
 import { tableAPI } from '../api';
+import { useTheme } from '../theme/ThemeContext';
 
 const { Text } = Typography;
 
@@ -22,6 +23,7 @@ const AlterTableModal: React.FC<Props> = ({
   open, dataSourceId, schema, database, table, changes, onCancel, onSuccess,
 }) => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   const [loading, setLoading] = useState(false);
   const [executing, setExecuting] = useState(false);
   const [ddl, setDdl] = useState('');
@@ -165,6 +167,7 @@ const AlterTableModal: React.FC<Props> = ({
         <Editor
           height={180}
           defaultLanguage="sql"
+          theme={mode === 'dark' ? 'vs-dark' : 'vs'}
           value={ddl}
           onChange={(v) => setDdl(v || '')}
           loading={loading ? '生成中...' : undefined}
@@ -183,6 +186,7 @@ const AlterTableModal: React.FC<Props> = ({
         <Editor
           height={120}
           defaultLanguage="sql"
+          theme={mode === 'dark' ? 'vs-dark' : 'vs'}
           value={rollbackDdl}
           options={{
             minimap: { enabled: false },

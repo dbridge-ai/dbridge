@@ -49,6 +49,7 @@ import SchemaTree from '../components/SchemaTree';
 import ObjectDefinitionPanel from '../components/ObjectDefinitionPanel';
 import ObjectEditorModal from '../components/ObjectEditorModal';
 import { getDialect, classifySQL } from '../utils/dialect';
+import { useTheme } from '../theme/ThemeContext';
 
 // --- Types ---
 
@@ -122,6 +123,7 @@ const nextTabId = () => `tab-${Date.now()}-${++tabIdCounter}`;
 
 const SQLEditor: React.FC = () => {
   const { t: tr } = useTranslation();
+  const { mode } = useTheme();
   // New SchemaTree replaces old tree; these remain for gradual migration
   // eslint-disable-next-line
   void (() => {}) as unknown;
@@ -1538,6 +1540,7 @@ const SQLEditor: React.FC = () => {
         <div style={{ resize: 'vertical', overflow: 'auto', height: 120, minHeight: 60, maxHeight: 400, border: '1px solid var(--db-border)', borderRadius: 4, marginBottom: 8 }}>
           <Editor
             height="100%" defaultLanguage="sql" value={t.sql}
+            theme={mode === 'dark' ? 'vs-dark' : 'vs'}
             loading={<div style={{ padding: 12, color: 'var(--db-text-tertiary)' }}>{tr('query.editorLoading')}</div>}
             onMount={(editor) => { editorRef.current = editor; }}
             onChange={(v) => {
@@ -2032,6 +2035,7 @@ const SQLEditor: React.FC = () => {
             <Editor 
               height={400} 
               defaultLanguage="sql" 
+              theme={mode === 'dark' ? 'vs-dark' : 'vs'}
               value={viewDef?.definition || ''}
               onChange={(val) => setViewDef(prev => prev ? { ...prev, definition: val || '' } : null)}
               options={{ minimap: { enabled: false }, fontSize: 13, wordWrap: 'on', readOnly: false, scrollBeyondLastLine: false }} 

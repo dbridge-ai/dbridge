@@ -10,6 +10,7 @@ import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import { useTranslation } from 'react-i18next';
 import { buildAntdTheme } from './theme';
+import { ThemeProvider, useTheme } from './theme/ThemeContext';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -34,16 +35,16 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   return <>{children}</>;
 };
 
-const App: React.FC = () => {
+const ThemeAwareApp: React.FC = () => {
   const { i18n } = useTranslation();
+  const { mode, preset } = useTheme();
   const antLocale = useMemo(() => i18n.language === 'en-US' ? enUS : zhCN, [i18n.language]);
-  const theme = useMemo(() => buildAntdTheme(), []);
+  const theme = useMemo(() => buildAntdTheme(preset, mode), [preset, mode]);
   return (
     <ConfigProvider
       locale={antLocale}
       theme={theme}
     >
-      {/* antd App 容器：message/notification/Modal 静态方法的 hook 化前提（7.2 步骤①） */}
       <AntdApp>
       <BrowserRouter>
         <Routes>
@@ -71,6 +72,14 @@ const App: React.FC = () => {
       </BrowserRouter>
       </AntdApp>
     </ConfigProvider>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <ThemeAwareApp />
+    </ThemeProvider>
   );
 };
 

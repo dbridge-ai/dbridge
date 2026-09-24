@@ -9,6 +9,7 @@ import {
 import Editor from '@monaco-editor/react';
 import { dbTransferAPI, dsAPI } from '../api';
 import type { TableListItem } from '../types';
+import { useTheme } from '../theme/ThemeContext';
 
 interface Props {
   open: boolean;
@@ -20,6 +21,7 @@ interface Props {
 
 const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onClose }) => {
   const { t } = useTranslation('exportModal');
+  const { mode } = useTheme();
   const [tables, setTables] = useState<TableListItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedTables, setSelectedTables] = useState<string[]>([]);
@@ -232,6 +234,7 @@ const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onCl
             <Editor
               height={450}
               defaultLanguage="sql"
+              theme={mode === 'dark' ? 'vs-dark' : 'vs'}
               value={generatedSQL}
               options={{
                 minimap: { enabled: false },

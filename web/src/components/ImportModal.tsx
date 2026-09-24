@@ -9,6 +9,7 @@ import {
 import Editor from '@monaco-editor/react';
 import { dbTransferAPI, dsAPI } from '../api';
 import type { DataSource } from '../types';
+import { useTheme } from '../theme/ThemeContext';
 
 const { Text } = Typography;
 
@@ -19,6 +20,7 @@ interface Props {
 
 const ImportModal: React.FC<Props> = ({ open, onClose }) => {
   const { t } = useTranslation('importModal');
+  const { mode } = useTheme();
   const [dataSources, setDataSources] = useState<DataSource[]>([]);
   const [targetDS, setTargetDS] = useState<string>('');
   const [sql, setSql] = useState('');
@@ -152,6 +154,7 @@ const ImportModal: React.FC<Props> = ({ open, onClose }) => {
           <Editor
             height={350}
             defaultLanguage="sql"
+            theme={mode === 'dark' ? 'vs-dark' : 'vs'}
             value={sql}
             onChange={v => setSql(v || '')}
             options={{

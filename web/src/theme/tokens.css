@@ -61,6 +61,161 @@
   --db-link-hover: var(--db-primary);
 }
 
+/* ===== Dark mode: neutral + semantic surface overrides ===== */
+[data-mode="dark"] {
+  /* --- 语义色（暗色模式调亮） --- */
+  --db-danger: #FF6B5E;
+  --db-warning: #FFC53D;
+  --db-success: #49C963;
+  --db-info: #4C8DF6;
+
+  /* --- 语义色三件套 --- */
+  --db-info-bg: #111D33;
+  --db-info-border: #1E3A5F;
+  --db-info-text: #4C8DF6;
+  --db-warning-bg: #2A2116;
+  --db-warning-border: #5C4118;
+  --db-warning-text: #FFC53D;
+  --db-success-bg: #12261A;
+  --db-success-border: #1F4D2A;
+  --db-success-text: #49C963;
+  --db-danger-bg: #2A1514;
+  --db-danger-border: #5C2018;
+  --db-danger-text: #FF6B5E;
+
+  /* --- 中性灰阶（dark） --- */
+  --db-text-primary: #E6E8EB;
+  --db-text-secondary: #A5ABB3;
+  --db-text-tertiary: #8A8F96;
+  --db-body-bg: #14171A;
+  --db-card-bg: #1C2025;
+  --db-elevated-bg: #22272E;
+  --db-border: #2E343B;
+  --db-border-light: #262C33;
+  --db-table-header-bg: #22272E;
+  --db-row-hover-bg: #262C33;
+  --db-disabled: #666C72;
+  --db-mask: rgba(0, 0, 0, 0.65);
+
+  /* --- 图表辅助色 --- */
+  --db-chart-purple: #A78BFA;
+  --db-chart-cyan: #2DD4BF;
+
+  /* --- 阴影（暗色模式加深） --- */
+  --db-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --db-shadow-modal: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Preset: green ===== */
+[data-preset="green"] {
+  --db-primary: #20A53A;
+  --db-primary-hover: #23B640;
+  --db-primary-active: #1B8C31;
+  --db-primary-text: #1A8730;
+  --db-primary-bg: #F6FFED;
+  --db-primary-border: #B7EB8F;
+  --db-sider-bg: #3A3F4A;
+  --db-sider-sub-bg: #33383F;
+}
+[data-mode="dark"][data-preset="green"] {
+  --db-primary: #49C963;
+  --db-primary-hover: #63D97A;
+  --db-primary-active: #3AA653;
+  --db-primary-text: #49C963;
+  --db-primary-bg: #16281A;
+  --db-primary-border: #2C5233;
+  --db-sider-bg: #2A2E35;
+  --db-sider-sub-bg: #24282E;
+}
+
+/* ===== Preset: teal ===== */
+[data-preset="teal"] {
+  --db-primary: #0F8B8D;
+  --db-primary-hover: #12A0A2;
+  --db-primary-active: #0B6F71;
+  --db-primary-text: #0E8486;
+  --db-primary-bg: #E6F6F6;
+  --db-primary-border: #9ED9DA;
+  --db-sider-bg: #22272E;
+  --db-sider-sub-bg: #1B2027;
+}
+[data-mode="dark"][data-preset="teal"] {
+  --db-primary: #2FB0B2;
+  --db-primary-hover: #4CC7C9;
+  --db-primary-active: #1F9395;
+  --db-primary-text: #2FB0B2;
+  --db-primary-bg: #102628;
+  --db-primary-border: #2A5153;
+  --db-sider-bg: #191D23;
+  --db-sider-sub-bg: #14181D;
+}
+
+/* ===== Preset: graphite ===== */
+[data-preset="graphite"] {
+  --db-primary: #3B82F6;
+  --db-primary-hover: #60A5FA;
+  --db-primary-active: #2563EB;
+  --db-primary-text: #3472D8;
+  --db-primary-bg: #EFF6FF;
+  --db-primary-border: #BFDBFE;
+  --db-sider-bg: #1A1D21;
+  --db-sider-sub-bg: #24282E;
+}
+[data-mode="dark"][data-preset="graphite"] {
+  --db-primary: #60A5FA;
+  --db-primary-hover: #93C5FD;
+  --db-primary-active: #3B82F6;
+  --db-primary-text: #60A5FA;
+  --db-primary-bg: #14212F;
+  --db-primary-border: #1E3A5F;
+  --db-sider-bg: #121517;
+  --db-sider-sub-bg: #1A1D21;
+}
+
+/* ===== Preset: indigo ===== */
+[data-preset="indigo"] {
+  --db-primary: #4F46E5;
+  --db-primary-hover: #6366F1;
+  --db-primary-active: #4338CA;
+  --db-primary-text: #4F46E5;
+  --db-primary-bg: #EEF2FF;
+  --db-primary-border: #C7D2FE;
+  --db-sider-bg: #0F172A;
+  --db-sider-sub-bg: #1E293B;
+}
+[data-mode="dark"][data-preset="indigo"] {
+  --db-primary: #818CF8;
+  --db-primary-hover: #A5B4FC;
+  --db-primary-active: #6366F1;
+  --db-primary-text: #818CF8;
+  --db-primary-bg: #1B1B3A;
+  --db-primary-border: #3730A3;
+  --db-sider-bg: #12182B;
+  --db-sider-sub-bg: #1A2138;
+}
+
+/* ===== Preset: amber ===== */
+[data-preset="amber"] {
+  --db-primary: #C77800;
+  --db-primary-hover: #E18A00;
+  --db-primary-active: #A66200;
+  --db-primary-text: #A96600;
+  --db-primary-bg: #FFF7E6;
+  --db-primary-border: #FFD591;
+  --db-sider-bg: #2B2721;
+  --db-sider-sub-bg: #221F1A;
+}
+[data-mode="dark"][data-preset="amber"] {
+  --db-primary: #E8A33D;
+  --db-primary-hover: #F5B85C;
+  --db-primary-active: #C77800;
+  --db-primary-text: #E8A33D;
+  --db-primary-bg: #2A2116;
+  --db-primary-border: #5C4118;
+  --db-sider-bg: #1F1C18;
+  --db-sider-sub-bg: #191714;
+}
+
 /* ===== 全局基础样式（从 index.css 迁移） ===== */
 
 body {
@@ -96,4 +251,72 @@ a {
 a:hover {
   color: var(--db-link-hover);
   text-decoration: underline;
+}
+
+/* ===== 滚动条样式 ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--db-text-tertiary) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--db-text-tertiary);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--db-text-secondary);
+}
+
+/* 暗色模式：滚动条颜色加深，与深色背景协调 */
+[data-mode="dark"] * {
+  scrollbar-color: #4A5058 transparent;
+}
+
+[data-mode="dark"] *::-webkit-scrollbar-thumb {
+  background-color: #4A5058;
+}
+
+[data-mode="dark"] *::-webkit-scrollbar-thumb:hover {
+  background-color: #6A7078;
+}
+
+/* ===== 下拉列表暗色模式样式 ===== */
+[data-mode="dark"] .ant-select-dropdown {
+  background: var(--db-elevated-bg);
+  border-color: var(--db-border);
+}
+
+[data-mode="dark"] .ant-select-item {
+  color: var(--db-text-primary);
+}
+
+[data-mode="dark"] .ant-select-item-option-selected {
+  background: var(--db-primary-bg) !important;
+  color: var(--db-primary-text) !important;
+  font-weight: 500;
+}
+
+[data-mode="dark"] .ant-select-item-option-selected:hover,
+[data-mode="dark"] .ant-select-item-option-selected.ant-select-item-option-active {
+  background: var(--db-primary) !important;
+  color: #fff !important;
+}
+
+[data-mode="dark"] .ant-select-item-option-active:not(.ant-select-item-option-selected) {
+  background: #3A4149 !important;
+  color: var(--db-text-primary) !important;
+}
+
+[data-mode="dark"] .ant-select-item-option-disabled {
+  color: var(--db-disabled);
 }
