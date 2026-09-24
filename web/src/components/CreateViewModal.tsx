@@ -103,7 +103,7 @@ const CreateViewModal: React.FC<CreateViewModalProps> = ({
             />
           )}
         </div>
-        <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+        <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
           <Editor
             height={250}
             defaultLanguage="sql"

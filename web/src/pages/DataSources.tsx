@@ -320,11 +320,11 @@ const DataSources: React.FC = () => {
         <Space size={4}>
           <Tooltip title={tr('datasource.query')}>
             <Link to={`/query?ds=${encodeURIComponent(record.id)}`}>
-              <Button type="text" size="small" icon={<CodeOutlined />} style={{ color: '#20a53a' }} />
+              <Button type="text" size="small" icon={<CodeOutlined />} style={{ color: 'var(--db-primary)' }} />
             </Link>
           </Tooltip>
           <Tooltip title={tr('datasource.edit')}>
-            <Button type="text" size="small" icon={<EditOutlined />} style={{ color: '#20a53a' }} onClick={() => handleOpenModal(record)} />
+            <Button type="text" size="small" icon={<EditOutlined />} style={{ color: 'var(--db-primary)' }} onClick={() => handleOpenModal(record)} />
           </Tooltip>
           {record.is_system ? (
             <Tooltip title={tr('datasource.cannotDeleteSystem')}>
@@ -338,7 +338,7 @@ const DataSources: React.FC = () => {
               cancelText={tr('common.cancelText')}
             >
               <Tooltip title={tr('datasource.delete')}>
-                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: '#e74c3c' }} />
+                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: 'var(--db-danger)' }} />
               </Tooltip>
             </Popconfirm>
           )}
@@ -603,7 +603,7 @@ const DataSources: React.FC = () => {
           </Button>,
         ]}
       >
-        <p style={{ color: '#666', fontSize: 13, marginBottom: 12 }}>
+        <p style={{ color: 'var(--db-text-secondary)', fontSize: 13, marginBottom: 12 }}>
           {tr('datasource.importDesc')}
         </p>
         <div style={{ marginBottom: 12 }}>
@@ -630,7 +630,7 @@ const DataSources: React.FC = () => {
         ]}
       >
         <div style={{ marginBottom: 16 }}>
-          <p style={{ color: '#666', fontSize: 13 }}>
+          <p style={{ color: 'var(--db-text-secondary)', fontSize: 13 }}>
             {tr('datasource.importDesc2')}
           </p>
           <Upload.Dragger
@@ -640,11 +640,11 @@ const DataSources: React.FC = () => {
             onRemove={() => setImportFile(null)}
             fileList={importFile ? [{ uid: '-1', name: importFile.name, status: 'done' }] : []}
           >
-            <p style={{ fontSize: 32, color: '#999', margin: '16px 0 8px' }}>
+            <p style={{ fontSize: 32, color: 'var(--db-text-tertiary)', margin: '16px 0 8px' }}>
               <UploadOutlined />
             </p>
             <p style={{ fontSize: 14 }}>{tr('datasource.dragHint')}</p>
-            <p style={{ fontSize: 12, color: '#999' }}>{tr('datasource.jsonOnly')}</p>
+            <p style={{ fontSize: 12, color: 'var(--db-text-tertiary)' }}>{tr('datasource.jsonOnly')}</p>
           </Upload.Dragger>
         </div>
         <div style={{ marginBottom: 16 }}>
@@ -655,18 +655,18 @@ const DataSources: React.FC = () => {
             placeholder={tr('datasource.importPasswordPlaceholder')}
           />
         </div>
-        {importing && <p style={{ color: '#1890ff' }}>{tr('datasource.importing')}</p>}
+        {importing && <p style={{ color: 'var(--db-info)' }}>{tr('datasource.importing')}</p>}
         {importResult && (
-          <div style={{ marginTop: 12, padding: 12, background: '#f5f5f5', borderRadius: 6 }}>
+          <div style={{ marginTop: 12, padding: 12, background: 'var(--db-row-hover-bg)', borderRadius: 6 }}>
             <p><strong>{tr('datasource.totalCount')}:</strong> {importResult.total} {tr('common.rows')}</p>
-            <p style={{ color: '#52c41a' }}><strong>{tr('datasource.successCount')}:</strong> {importResult.success} {tr('common.rows')}</p>
+            <p style={{ color: 'var(--db-primary)' }}><strong>{tr('datasource.successCount')}:</strong> {importResult.success} {tr('common.rows')}</p>
             {importResult.skip > 0 && (
-              <p style={{ color: '#faad14' }}><strong>{tr('datasource.skipCount')}:</strong> {importResult.skip} {tr('common.rows')}</p>
+              <p style={{ color: 'var(--db-warning)' }}><strong>{tr('datasource.skipCount')}:</strong> {importResult.skip} {tr('common.rows')}</p>
             )}
             {importResult.errors?.length > 0 && (
               <div style={{ marginTop: 8 }}>
-                <strong style={{ color: '#e74c3c' }}>{tr('datasource.failDetail')}:</strong>
-                <ul style={{ fontSize: 12, color: '#666', maxHeight: 150, overflow: 'auto', marginTop: 4 }}>
+                <strong style={{ color: 'var(--db-danger)' }}>{tr('datasource.failDetail')}:</strong>
+                <ul style={{ fontSize: 12, color: 'var(--db-text-secondary)', maxHeight: 150, overflow: 'auto', marginTop: 4 }}>
                   {importResult.errors.map((e, i) => (
                     <li key={i}>{e}</li>
                   ))}

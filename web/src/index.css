@@ -183,35 +183,6 @@
 [data-streamdown] .animate-spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-body {
-  margin: 0;
-  font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px;
-  color: #333;
-  background: #f0f2f5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  color: #333;
-}
-
-h2 {
-  font-size: 18px;
-  margin-bottom: 16px;
-}
-
-a {
-  text-decoration: none;
-}
-
 .ant-tree .ant-tree-indent-unit {
   width: 12px;
 }

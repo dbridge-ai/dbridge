@@ -1,0 +1,94 @@
+/* ===== DBridge Design Tokens ===== */
+/* 常量层 + green preset light 值。后续 dark / preset 切换通过 [data-mode] / [data-accent] 覆盖 */
+
+:root {
+  /* --- 语义色（常量层，不随 preset 切换） --- */
+  --db-danger: #E74C3C;
+  --db-warning: #F0AD4E;
+  --db-success: #20A53A;
+  --db-info: #1677FF;
+
+  /* --- 语义色三件套 --- */
+  --db-info-bg: #E6F0FF;
+  --db-info-border: #91B8FF;
+  --db-info-text: #0958D9;
+  --db-warning-bg: #FFFBE6;
+  --db-warning-border: #FFE58F;
+  --db-warning-text: #AD6800;
+  --db-success-bg: #F6FFED;
+  --db-success-border: #B7EB8F;
+  --db-success-text: #237804;
+  --db-danger-bg: #FFF2F0;
+  --db-danger-border: #FFCCC7;
+  --db-danger-text: #CF1322;
+
+  /* --- 中性灰阶（light） --- */
+  --db-text-primary: #333333;
+  --db-text-secondary: #666666;
+  --db-text-tertiary: #999999;
+  --db-body-bg: #F0F2F5;
+  --db-card-bg: #FFFFFF;
+  --db-elevated-bg: #FFFFFF;
+  --db-border: #E8E8E8;
+  --db-border-light: #F0F0F0;
+  --db-table-header-bg: #FAFAFA;
+  --db-row-hover-bg: #F5F5F5;
+  --db-disabled: #BFBFBF;
+  --db-mask: rgba(0, 0, 0, 0.45);
+
+  /* --- 强调色（green preset） --- */
+  --db-primary: #20A53A;
+  --db-primary-hover: #23B640;
+  --db-primary-active: #1B8C31;
+  --db-primary-bg: #F6FFED;
+  --db-primary-border: #B7EB8F;
+
+  /* --- 外壳色（green preset） --- */
+  --db-sider-bg: #3A3F4A;
+  --db-sider-sub-bg: #33383F;
+
+  /* --- 阴影 --- */
+  --db-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --db-shadow-modal: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  /* --- 链接 --- */
+  --db-link: var(--db-primary);
+  --db-link-hover: var(--db-primary-hover);
+}
+
+/* ===== 全局基础样式（从 index.css 迁移） ===== */
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--db-text-primary);
+  background: var(--db-body-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  color: var(--db-text-primary);
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+a {
+  color: var(--db-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--db-link-hover);
+  text-decoration: underline;
+}

@@ -147,7 +147,7 @@ const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onCl
               <Radio.Button value="sqlserver">SQL Server</Radio.Button>
             </Radio.Group>
             {targetDbType !== dbType && (
-              <span style={{ marginLeft: 8, color: '#fa8c16', fontSize: 12 }}>
+              <span style={{ marginLeft: 8, color: 'var(--db-warning)', fontSize: 12 }}>
                 {t('typeConversion')}: {dbType} → {targetDbType}
               </span>
             )}
@@ -191,7 +191,7 @@ const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onCl
               {t('selectAll')}
             </Checkbox>
           </div>
-          <div style={{ maxHeight: 300, overflow: 'auto', border: '1px solid #f0f0f0', borderRadius: 4, padding: 8 }}>
+          <div style={{ maxHeight: 300, overflow: 'auto', border: '1px solid var(--db-border-light)', borderRadius: 4, padding: 8 }}>
             <Checkbox.Group
               value={selectedTables}
               onChange={vals => setSelectedTables(vals as string[])}
@@ -202,7 +202,7 @@ const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onCl
                   <Checkbox key={t.name} value={t.name}>
                     {t.name}
                     {t.row_count !== null && (
-                      <span style={{ color: '#999', fontSize: 11, marginLeft: 4 }}>({t.row_count})</span>
+                      <span style={{ color: 'var(--db-text-tertiary)', fontSize: 11, marginLeft: 4 }}>({t.row_count})</span>
                     )}
                   </Checkbox>
                 ))}
@@ -228,7 +228,7 @@ const ExportModal: React.FC<Props> = ({ open, dataSourceId, schema, dbType, onCl
               </Col>
             </Row>
           )}
-          <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+          <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
             <Editor
               height={450}
               defaultLanguage="sql"

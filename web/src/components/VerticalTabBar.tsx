@@ -21,8 +21,8 @@ const VerticalTabBar: React.FC<Props> = ({ tabs, activeTab, isOpen, onTabClick }
       flexShrink: 0,
       display: 'flex',
       flexDirection: 'column',
-      borderRight: '1px solid #f0f0f0',
-      background: '#fafafa',
+      borderRight: '1px solid var(--db-border-light)',
+      background: 'var(--db-table-header-bg)',
       height: '100%',
     }}>
       {tabs.map(tab => {
@@ -38,14 +38,14 @@ const VerticalTabBar: React.FC<Props> = ({ tabs, activeTab, isOpen, onTabClick }
                 justifyContent: 'center',
                 padding: '12px 4px',
                 cursor: 'pointer',
-                borderLeft: active ? '3px solid #1890ff' : '3px solid transparent',
-                background: active ? '#e6f7ff' : 'transparent',
-                color: active ? '#1890ff' : '#666',
+                borderLeft: active ? '3px solid var(--db-info)' : '3px solid transparent',
+                background: active ? 'var(--db-info-bg)' : 'transparent',
+                color: active ? 'var(--db-info)' : 'var(--db-text-secondary)',
                 transition: 'all 0.2s',
                 fontSize: 20,
               }}
               onMouseEnter={e => {
-                if (!active) (e.currentTarget as HTMLElement).style.background = '#f0f0f0';
+                if (!active) (e.currentTarget as HTMLElement).style.background = 'var(--db-border-light)';
               }}
               onMouseLeave={e => {
                 if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent';

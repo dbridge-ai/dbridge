@@ -9,6 +9,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import { useTranslation } from 'react-i18next';
+import { buildAntdTheme } from './theme';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -36,59 +37,11 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 const App: React.FC = () => {
   const { i18n } = useTranslation();
   const antLocale = useMemo(() => i18n.language === 'en-US' ? enUS : zhCN, [i18n.language]);
+  const theme = useMemo(() => buildAntdTheme(), []);
   return (
     <ConfigProvider
       locale={antLocale}
-      theme={{
-        token: {
-          colorPrimary: '#20a53a',
-          colorSuccess: '#20a53a',
-          colorError: '#e74c3c',
-          colorWarning: '#f0ad4e',
-          colorInfo: '#20a53a',
-          borderRadius: 4,
-          colorBgLayout: '#f0f2f5',
-          fontFamily: "system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-          fontSize: 14,
-          colorText: '#333',
-          colorTextSecondary: '#666',
-          controlHeight: 32,
-        },
-        components: {
-          Table: {
-            headerBg: '#fafafa',
-            headerColor: '#333',
-            borderColor: '#e8e8e8',
-            rowHoverBg: '#f5f5f5',
-          },
-          Button: {
-            primaryShadow: 'none',
-            defaultShadow: 'none',
-          },
-          Card: {
-            paddingLG: 16,
-          },
-          Modal: {
-            titleFontSize: 16,
-            headerBg: '#fff',
-          },
-          Menu: {
-            darkItemBg: '#3a3f4a',
-            darkItemColor: '#ccc',
-            darkItemHoverColor: '#fff',
-            darkItemSelectedBg: '#20a53a',
-            darkItemSelectedColor: '#fff',
-            darkSubMenuItemBg: '#33383f',
-          },
-          Layout: {
-            siderBg: '#3a3f4a',
-            headerBg: '#fff',
-            bodyBg: '#f0f2f5',
-            headerHeight: 50,
-            headerPadding: '0 16px',
-          },
-        },
-      }}
+      theme={theme}
     >
       <BrowserRouter>
         <Routes>

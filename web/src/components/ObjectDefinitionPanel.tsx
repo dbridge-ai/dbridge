@@ -63,7 +63,7 @@ const ObjectDefinitionPanel: React.FC<ObjectDefinitionPanelProps> = ({
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: '4px 8px', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div style={{ padding: '4px 8px', borderBottom: '1px solid var(--db-border-light)', display: 'flex', alignItems: 'center', gap: 4 }}>
         <span style={{ flex: 1, fontWeight: 500 }}>{objectName}</span>
         <Space size={4}>
           <Button size="small" icon={<ReloadOutlined />} onClick={loadDefinition} title={tr('common.refresh')} />

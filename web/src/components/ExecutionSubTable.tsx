@@ -146,18 +146,18 @@ const ExecutionSubTable: React.FC<Props> = ({ taskId, refreshTrigger, onViewLogs
       title: <span style={{ paddingLeft: 8 }}>{t('action')}</span>, key: 'action', width: 160,
       render: (_: any, record: Execution) => (
         <Space size={8} style={{ paddingLeft: 8 }}>
-          <Tooltip title={t('viewLog')}><a style={{ color: '#1890ff' }} onClick={() => onViewLogs(taskId, record.id)}><EyeOutlined /></a></Tooltip>
+          <Tooltip title={t('viewLog')}><a style={{ color: 'var(--db-info)' }} onClick={() => onViewLogs(taskId, record.id)}><EyeOutlined /></a></Tooltip>
           {record.status === 'running' && (
-            <Tooltip title={t('cancel')}><a style={{ color: '#fa8c16' }} onClick={() => handleCancel()}><StopOutlined /></a></Tooltip>
+            <Tooltip title={t('cancel')}><a style={{ color: 'var(--db-warning)' }} onClick={() => handleCancel()}><StopOutlined /></a></Tooltip>
           )}
           {(record.status === 'failed' || record.status === 'cancelled' || record.status === 'pending') && (
-            <Tooltip title={t('retry')}><a style={{ color: '#20a53a' }} onClick={() => handleRetry()}><PlayCircleOutlined /></a></Tooltip>
+            <Tooltip title={t('retry')}><a style={{ color: 'var(--db-primary)' }} onClick={() => handleRetry()}><PlayCircleOutlined /></a></Tooltip>
           )}
           {record.status === 'completed' && record.result_file_path && (
-            <Tooltip title={t('download')}><a style={{ color: '#20a53a' }} onClick={() => handleDownload(record)}><DownloadOutlined /></a></Tooltip>
+            <Tooltip title={t('download')}><a style={{ color: 'var(--db-primary)' }} onClick={() => handleDownload(record)}><DownloadOutlined /></a></Tooltip>
           )}
           {record.status === 'completed' && record.result_file_path && onImportFromExecution && (
-            <Tooltip title={t('importTo')}><a style={{ color: '#fa8c16' }} onClick={() => onImportFromExecution(taskId)}><ImportOutlined /></a></Tooltip>
+            <Tooltip title={t('importTo')}><a style={{ color: 'var(--db-warning)' }} onClick={() => onImportFromExecution(taskId)}><ImportOutlined /></a></Tooltip>
           )}
         </Space>
       ),

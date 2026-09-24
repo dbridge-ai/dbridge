@@ -192,7 +192,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
         </Form.Item>
 
         {mode === 'edit' && dialectOf(dbType) === 'oracle' && (
-          <div style={{ color: '#faad14', fontSize: 12, marginBottom: 16 }}>
+          <div style={{ color: 'var(--db-warning)', fontSize: 12, marginBottom: 16 }}>
             {t('schemaForm.oracleRenameWarning')}
           </div>
         )}
@@ -237,7 +237,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
 
         {ddl && (
           <Form.Item label={t('schemaForm.ddlPreview')}>
-            <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+            <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
               <Editor
                 height={120}
                 defaultLanguage="sql"
@@ -256,7 +256,7 @@ const SchemaFormModal: React.FC<SchemaFormModalProps> = ({
         )}
 
         {mode === 'edit' && dialectOf(dbType) === 'mysql' && (
-          <div style={{ color: '#faad14', fontSize: 12 }}>
+          <div style={{ color: 'var(--db-warning)', fontSize: 12 }}>
             {t('schemaForm.charsetWarning')}
           </div>
         )}

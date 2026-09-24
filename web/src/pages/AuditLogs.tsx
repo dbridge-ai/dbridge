@@ -163,7 +163,7 @@ const AuditLogs: React.FC = () => {
   const expandedRowRender = (record: any) => {
     const d = parseDetails(record.details);
     return (
-      <pre style={{ margin: 0, fontSize: 12, maxHeight: 300, overflow: 'auto', background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+      <pre style={{ margin: 0, fontSize: 12, maxHeight: 300, overflow: 'auto', background: 'var(--db-row-hover-bg)', padding: 12, borderRadius: 4 }}>
         {d ? JSON.stringify(d, null, 2) : record.details}
       </pre>
     );

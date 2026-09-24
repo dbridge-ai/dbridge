@@ -173,7 +173,7 @@ const StorageManagement: React.FC = () => {
     { title: t('storageMgmt.name'), dataIndex: 'name', key: 'name', width: 160,
       render: (n: string, r: StorageProfile) => (
         <Space>
-          {r.is_default && <StarFilled style={{ color: '#faad14' }} />}
+          {r.is_default && <StarFilled style={{ color: 'var(--db-warning)' }} />}
           {n}
           {r.is_default && <Tag color="green">{t('storageMgmt.default')}</Tag>}
         </Space>

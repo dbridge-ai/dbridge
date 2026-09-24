@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #3a3f4a 0%, #2c3038 100%)',
+        background: 'linear-gradient(135deg, var(--db-sider-bg) 0%, #2c3038 100%)',
       }}
     >
       <Card
@@ -57,12 +57,12 @@ const Login: React.FC = () => {
       >
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <DatabaseOutlined
-            style={{ fontSize: 48, color: '#20a53a', marginBottom: 12 }}
+            style={{ fontSize: 48, color: 'var(--db-primary)', marginBottom: 12 }}
           />
-          <h2 style={{ margin: 0, fontSize: 22, color: '#333' }}>
+          <h2 style={{ margin: 0, fontSize: 22, color: 'var(--db-text-primary)' }}>
             {t('login.title')}
           </h2>
-          <p style={{ color: '#999', marginTop: 8, fontSize: 13 }}>
+          <p style={{ color: 'var(--db-text-tertiary)', marginTop: 8, fontSize: 13 }}>
             {t('login.subtitle')}
           </p>
         </div>
@@ -73,7 +73,7 @@ const Login: React.FC = () => {
               rules={[{ required: true, message: t('login.requireUsername') }]}
             >
               <Input
-                prefix={<UserOutlined style={{ color: '#999' }} />}
+                prefix={<UserOutlined style={{ color: 'var(--db-text-tertiary)' }} />}
                 placeholder={t('login.username')}
               />
             </Form.Item>
@@ -83,7 +83,7 @@ const Login: React.FC = () => {
               rules={[{ required: true, message: t('login.requirePassword') }]}
             >
               <Input.Password
-                prefix={<LockOutlined style={{ color: '#999' }} />}
+                prefix={<LockOutlined style={{ color: 'var(--db-text-tertiary)' }} />}
                 placeholder={t('login.password')}
               />
             </Form.Item>

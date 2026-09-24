@@ -39,35 +39,35 @@ const Dashboard: React.FC = () => {
       <Spin spinning={loading}>
         <Row gutter={[16, 16]}>
           <Col span={6}>
-            <Card hoverable style={{ borderLeft: '3px solid #20a53a' }} styles={{ body: { padding: '20px 24px' } }}>
-              <Statistic title={<span style={{ color: '#666' }}>{tr('dashboards.dataSources')}</span>}
-                value={stats?.data_source_count ?? 0} prefix={<DatabaseOutlined style={{ color: '#20a53a' }} />}
-                valueStyle={{ color: '#333', fontWeight: 600 }} />
+            <Card hoverable style={{ borderLeft: '3px solid var(--db-primary)' }} styles={{ body: { padding: '20px 24px' } }}>
+              <Statistic title={<span style={{ color: 'var(--db-text-secondary)' }}>{tr('dashboards.dataSources')}</span>}
+                value={stats?.data_source_count ?? 0} prefix={<DatabaseOutlined style={{ color: 'var(--db-primary)' }} />}
+                valueStyle={{ color: 'var(--db-text-primary)', fontWeight: 600 }} />
             </Card>
           </Col>
           <Col span={6}>
-            <Card hoverable style={{ borderLeft: '3px solid #1890ff' }} styles={{ body: { padding: '20px 24px' } }}>
-              <Statistic title={<span style={{ color: '#666' }}>{tr('dashboards.syncTasks')}</span>}
-                value={stats?.sync_task_count ?? 0} prefix={<SyncOutlined style={{ color: '#1890ff' }} />}
-                valueStyle={{ color: '#333', fontWeight: 600 }} />
+            <Card hoverable style={{ borderLeft: '3px solid var(--db-info)' }} styles={{ body: { padding: '20px 24px' } }}>
+              <Statistic title={<span style={{ color: 'var(--db-text-secondary)' }}>{tr('dashboards.syncTasks')}</span>}
+                value={stats?.sync_task_count ?? 0} prefix={<SyncOutlined style={{ color: 'var(--db-info)' }} />}
+                valueStyle={{ color: 'var(--db-text-primary)', fontWeight: 600 }} />
               {stats && stats.running_syncs > 0 && (
-                <div style={{ fontSize: 12, color: '#1890ff', marginTop: 4 }}>{stats.running_syncs} {tr('dashboards.running')}</div>
+                <div style={{ fontSize: 12, color: 'var(--db-info)', marginTop: 4 }}>{stats.running_syncs} {tr('dashboards.running')}</div>
               )}
             </Card>
           </Col>
           <Col span={6}>
             <Card hoverable style={{ borderLeft: '3px solid #722ed1' }} styles={{ body: { padding: '20px 24px' } }}>
-              <Statistic title={<span style={{ color: '#666' }}>{tr('dashboards.queryCount')}</span>}
+              <Statistic title={<span style={{ color: 'var(--db-text-secondary)' }}>{tr('dashboards.queryCount')}</span>}
                 value={stats?.query_count ?? 0} prefix={<CodeOutlined style={{ color: '#722ed1' }} />}
-                valueStyle={{ color: '#333', fontWeight: 600 }} />
+                valueStyle={{ color: 'var(--db-text-primary)', fontWeight: 600 }} />
             </Card>
           </Col>
           <Col span={6}>
-            <Card hoverable style={{ borderLeft: '3px solid #52c41a' }} styles={{ body: { padding: '20px 24px' } }}>
-              <Statistic title={<span style={{ color: '#666' }}>{tr('dashboards.successRate')}</span>}
+            <Card hoverable style={{ borderLeft: '3px solid var(--db-primary)' }} styles={{ body: { padding: '20px 24px' } }}>
+              <Statistic title={<span style={{ color: 'var(--db-text-secondary)' }}>{tr('dashboards.successRate')}</span>}
                 value={stats?.success_rate ?? 100} precision={1} suffix="%"
-                prefix={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-                valueStyle={{ color: '#333', fontWeight: 600 }} />
+                prefix={<CheckCircleOutlined style={{ color: 'var(--db-primary)' }} />}
+                valueStyle={{ color: 'var(--db-text-primary)', fontWeight: 600 }} />
             </Card>
           </Col>
         </Row>
@@ -77,21 +77,21 @@ const Dashboard: React.FC = () => {
           <Card title={tr('dashboards.systemInfo')} size="small">
             <Row gutter={16}>
               <Col span={8}>
-                <div style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
-                  <span style={{ color: '#999' }}>{tr('dashboards.sysVersion')}:</span>
-                  <span style={{ color: '#333' }}>DBridge v1.0.0</span>
+                <div style={{ padding: '8px 0', borderBottom: '1px solid var(--db-border-light)' }}>
+                  <span style={{ color: 'var(--db-text-tertiary)' }}>{tr('dashboards.sysVersion')}:</span>
+                  <span style={{ color: 'var(--db-text-primary)' }}>DBridge v1.0.0</span>
                 </div>
               </Col>
               <Col span={8}>
-                <div style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
-                  <span style={{ color: '#999' }}>{tr('dashboards.runStatus')}:</span>
-                  <span style={{ color: '#20a53a' }}>{tr('dashboards.normal')}</span>
+                <div style={{ padding: '8px 0', borderBottom: '1px solid var(--db-border-light)' }}>
+                  <span style={{ color: 'var(--db-text-tertiary)' }}>{tr('dashboards.runStatus')}:</span>
+                  <span style={{ color: 'var(--db-primary)' }}>{tr('dashboards.normal')}</span>
                 </div>
               </Col>
               <Col span={8}>
-                <div style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
-                  <span style={{ color: '#999' }}>{tr('dashboards.auditLogs')}:</span>
-                  <span style={{ color: '#333' }}>{stats?.audit_log_count ?? 0} {tr('common.rows')}</span>
+                <div style={{ padding: '8px 0', borderBottom: '1px solid var(--db-border-light)' }}>
+                  <span style={{ color: 'var(--db-text-tertiary)' }}>{tr('dashboards.auditLogs')}:</span>
+                  <span style={{ color: 'var(--db-text-primary)' }}>{stats?.audit_log_count ?? 0} {tr('common.rows')}</span>
                 </div>
               </Col>
             </Row>

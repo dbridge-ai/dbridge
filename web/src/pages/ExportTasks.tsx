@@ -419,12 +419,12 @@ const ExportTasks: React.FC = () => {
       title: tr('datasource.tableAction'), key: 'action', width: 160,
       render: (_: any, record: ExportTask) => (
         <Space size={8}>
-          <Tooltip title={tr('exportTask.detail')}><a style={{ color: '#1890ff' }} onClick={() => handleViewTaskDetail(record.id)}><EyeOutlined /></a></Tooltip>
-          <Tooltip title={tr('exportTask.start')}><a style={{ color: '#20a53a' }} onClick={() => handleStart(record.id)}><PlayCircleOutlined /></a></Tooltip>
+          <Tooltip title={tr('exportTask.detail')}><a style={{ color: 'var(--db-info)' }} onClick={() => handleViewTaskDetail(record.id)}><EyeOutlined /></a></Tooltip>
+          <Tooltip title={tr('exportTask.start')}><a style={{ color: 'var(--db-primary)' }} onClick={() => handleStart(record.id)}><PlayCircleOutlined /></a></Tooltip>
           {record.status === 'running' && (
-            <Tooltip title={tr('exportTask.cancel')}><a style={{ color: '#fa8c16' }} onClick={() => handleCancel(record.id)}><StopOutlined /></a></Tooltip>
+            <Tooltip title={tr('exportTask.cancel')}><a style={{ color: 'var(--db-warning)' }} onClick={() => handleCancel(record.id)}><StopOutlined /></a></Tooltip>
           )}
-          <Tooltip title={tr('exportTask.delete')}><a style={{ color: '#e74c3c' }} onClick={() => handleDelete(record.id)}><DeleteOutlined /></a></Tooltip>
+          <Tooltip title={tr('exportTask.delete')}><a style={{ color: 'var(--db-danger)' }} onClick={() => handleDelete(record.id)}><DeleteOutlined /></a></Tooltip>
         </Space>
       ),
     },
@@ -644,17 +644,17 @@ const ExportTasks: React.FC = () => {
                     <Typography.Link onClick={() => fetchBrowseFiles('')} style={{ fontSize: 13 }}>{te('rootDir')}</Typography.Link>
                     {browseCurrentDir.split('/').filter(Boolean).map((part, idx, arr) => (
                       <span key={idx}>
-                        <span style={{ margin: '0 4px', color: '#999' }}>/</span>
+                        <span style={{ margin: '0 4px', color: 'var(--db-text-tertiary)' }}>/</span>
                         {idx < arr.length - 1 ? (
                           <Typography.Link onClick={() => fetchBrowseFiles(arr.slice(0, idx + 1).join('/'))} style={{ fontSize: 13 }}>{part}</Typography.Link>
                         ) : (
-                          <span style={{ color: '#666' }}>{part}</span>
+                          <span style={{ color: 'var(--db-text-secondary)' }}>{part}</span>
                         )}
                       </span>
                     ))}
                   </span>
                 ) : (
-                  <span style={{ fontSize: 13, color: '#666' }}>{te('rootDir')}</span>
+                  <span style={{ fontSize: 13, color: 'var(--db-text-secondary)' }}>{te('rootDir')}</span>
                 )}
               </div>
               {browseCurrentDir && (
@@ -667,7 +667,7 @@ const ExportTasks: React.FC = () => {
             </div>
             <div style={{ minHeight: 400, maxHeight: 600, overflow: 'auto' }}>
               <Tree showLine treeData={browseTree.map((n: any) => ({
-                title: n.is_dir ? <Space><FolderOutlined style={{color:'#faad14'}}/>{n.name}</Space> : <Space><FileOutlined />{n.name}</Space>,
+                title: n.is_dir ? <Space><FolderOutlined style={{color:'var(--db-warning)'}}/>{n.name}</Space> : <Space><FileOutlined />{n.name}</Space>,
                 key: n.path, isLeaf: true,
               }))}
                 onSelect={(_: any, info: any) => {
@@ -751,43 +751,43 @@ const ExportTasks: React.FC = () => {
           return (
             <table style={{ fontSize: 14, lineHeight: 2.5, borderCollapse: 'collapse' }}>
               <tbody>
-                <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('taskType')}</td><td style={{ paddingLeft: 4, fontWeight: 'bold' }}>{isImport ? te('importType') : te('exportType')}</td></tr>
+                <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('taskType')}</td><td style={{ paddingLeft: 4, fontWeight: 'bold' }}>{isImport ? te('importType') : te('exportType')}</td></tr>
 
                 {isImport ? (<>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('importMethod')}</td><td style={{ paddingLeft: 4 }}>{importSource === 'db2db' ? te('methodDb2db') : importSource === 'storage' ? te('methodStorage') : te('methodUpload')}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('importMethod')}</td><td style={{ paddingLeft: 4 }}>{importSource === 'db2db' ? te('methodDb2db') : importSource === 'storage' ? te('methodStorage') : te('methodUpload')}</td></tr>
                   {importSource === 'db2db' && (<>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('sourceDS')}</td><td style={{ paddingLeft: 4 }}>{srcDSName || '-'}</td></tr>
-                    {taskDetail.source_database && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('sourceDatabase')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.source_database}</td></tr>}
-                    {taskDetail.source_schema && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('sourceSchema')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.source_schema}</td></tr>}
-                    {taskDetail.source_tables && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('sourceTables')}</td><td style={{ paddingLeft: 4 }}>{Array.isArray(taskDetail.source_tables) ? taskDetail.source_tables.join(', ') || te('wholeDB') : (taskDetail.source_tables || '-')}</td></tr>}
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('sourceDS')}</td><td style={{ paddingLeft: 4 }}>{srcDSName || '-'}</td></tr>
+                    {taskDetail.source_database && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('sourceDatabase')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.source_database}</td></tr>}
+                    {taskDetail.source_schema && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('sourceSchema')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.source_schema}</td></tr>}
+                    {taskDetail.source_tables && <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('sourceTables')}</td><td style={{ paddingLeft: 4 }}>{Array.isArray(taskDetail.source_tables) ? taskDetail.source_tables.join(', ') || te('wholeDB') : (taskDetail.source_tables || '-')}</td></tr>}
                   </>)}
                   {importSource === 'upload' && (<>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('uploadFile')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_name || '-'}</td></tr>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('storageProfileDetail')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.storage_profile || '-'}</td></tr>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('storagePath')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_path || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('uploadFile')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_name || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('storageProfileDetail')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.storage_profile || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('storagePath')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_path || '-'}</td></tr>
                   </>)}
                   {importSource === 'storage' && (<>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('fileName')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_name || '-'}</td></tr>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('storageProfileDetail')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.storage_profile || '-'}</td></tr>
-                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('filePath')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_path || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('fileName')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_name || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('storageProfileDetail')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.storage_profile || '-'}</td></tr>
+                    <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('filePath')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_file_path || '-'}</td></tr>
                   </>)}
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('targetDS')}</td><td style={{ paddingLeft: 4 }}>{dsName || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('targetDatabase')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.database_name || taskDetail.target_database || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('targetSchema')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.schema_name || taskDetail.target_schema || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('importStrategy')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_strategy === 'fail' ? te('strategyFail') : taskDetail.import_strategy === 'skip' ? te('strategySkip') : taskDetail.import_strategy === 'replace' ? te('strategyReplace') : taskDetail.import_strategy || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('importContent')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_content === 'structure' ? te('structureOnly') : taskDetail.import_content === 'data' ? te('dataOnly') : te('structureAndData')}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('safetyCheck')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.skip_safety_check ? te('skipped') : te('normal')}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('targetDS')}</td><td style={{ paddingLeft: 4 }}>{dsName || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('targetDatabase')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.database_name || taskDetail.target_database || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('targetSchema')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.schema_name || taskDetail.target_schema || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('importStrategy')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_strategy === 'fail' ? te('strategyFail') : taskDetail.import_strategy === 'skip' ? te('strategySkip') : taskDetail.import_strategy === 'replace' ? te('strategyReplace') : taskDetail.import_strategy || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('importContent')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.import_content === 'structure' ? te('structureOnly') : taskDetail.import_content === 'data' ? te('dataOnly') : te('structureAndData')}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('safetyCheck')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.skip_safety_check ? te('skipped') : te('normal')}</td></tr>
                 </>) : (<>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('datasourceLabel')}</td><td style={{ paddingLeft: 4 }}>{dsName}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('databaseLabel2')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.database_name || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>Schema</td><td style={{ paddingLeft: 4 }}>{taskDetail.schema_name || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('exportScope')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_scope === 'schema' ? te('wholeDB') : te('selectedTables')}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('exportContent')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_content === 'structure' ? te('structureOnly') : taskDetail.export_content === 'data' ? te('dataOnly') : te('structureAndData')}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('exportFormat')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_format || '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('tableList')}</td><td style={{ paddingLeft: 4 }}>{taskDetailTables.length > 0 ? taskDetailTables.join(', ') : '-'}</td></tr>
-                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('batchSize')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_batch_size || 500}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('datasourceLabel')}</td><td style={{ paddingLeft: 4 }}>{dsName}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('databaseLabel2')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.database_name || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>Schema</td><td style={{ paddingLeft: 4 }}>{taskDetail.schema_name || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('exportScope')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_scope === 'schema' ? te('wholeDB') : te('selectedTables')}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('exportContent')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_content === 'structure' ? te('structureOnly') : taskDetail.export_content === 'data' ? te('dataOnly') : te('structureAndData')}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('exportFormat')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_format || '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('tableList')}</td><td style={{ paddingLeft: 4 }}>{taskDetailTables.length > 0 ? taskDetailTables.join(', ') : '-'}</td></tr>
+                  <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('batchSize')}</td><td style={{ paddingLeft: 4 }}>{taskDetail.export_batch_size || 500}</td></tr>
                 </>)}
-                <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: '#666' }}>{te('createdAt')}</td><td style={{ paddingLeft: 4 }}>{fmtDate(taskDetail.created_at)}</td></tr>
+                <tr><td style={{ textAlign: 'right', paddingRight: 12, whiteSpace: 'nowrap', color: 'var(--db-text-secondary)' }}>{te('createdAt')}</td><td style={{ paddingLeft: 4 }}>{fmtDate(taskDetail.created_at)}</td></tr>
               </tbody>
             </table>
           );

@@ -102,7 +102,7 @@ const FilesPage: React.FC = () => {
     return cached.dirs.map(d => {
       const childLoaded = treeCache.current[d.path]?.loaded;
       return {
-        title: <Space><FolderOutlined style={{ color: '#faad14' }} /><span>{d.name}</span></Space>,
+        title: <Space><FolderOutlined style={{ color: 'var(--db-warning)' }} /><span>{d.name}</span></Space>,
         key: d.path,
         isLeaf: false,  // 目录永远不是叶子，确保可点击
         selectable: true,
@@ -363,9 +363,9 @@ const FilesPage: React.FC = () => {
   };
 
   const breadcrumbItems = [
-    { title: <span onClick={() => navigateTo('')} style={{ cursor: 'pointer', color: '#1677ff' }}><HomeOutlined style={{ marginRight: 2 }} />{t('files.rootDir')}</span> },
+    { title: <span onClick={() => navigateTo('')} style={{ cursor: 'pointer', color: 'var(--db-info)' }}><HomeOutlined style={{ marginRight: 2 }} />{t('files.rootDir')}</span> },
     ...currentDir.split('/').filter(Boolean).map((part, idx, arr) => ({
-      title: <span onClick={() => navigateTo(arr.slice(0, idx + 1).join('/'))} style={{ cursor: 'pointer', color: '#1677ff' }}>{part}</span>,
+      title: <span onClick={() => navigateTo(arr.slice(0, idx + 1).join('/'))} style={{ cursor: 'pointer', color: 'var(--db-info)' }}>{part}</span>,
     })),
   ];
 
@@ -374,7 +374,7 @@ const FilesPage: React.FC = () => {
       title: t('files.name'), dataIndex: 'name', key: 'name', ellipsis: true,
       render: (name: string, r: FileInfo) => (
         <Space>
-          {r.is_dir ? <FolderOutlined style={{ color: '#faad14', fontSize: 16 }} /> : <FileOutlined style={{ color: '#999', fontSize: 16 }} />}
+          {r.is_dir ? <FolderOutlined style={{ color: 'var(--db-warning)', fontSize: 16 }} /> : <FileOutlined style={{ color: 'var(--db-text-tertiary)', fontSize: 16 }} />}
           <Tooltip title={name}>
             {r.is_dir ? <a onClick={() => handleDirClick(r.path)}>{name}</a> : <span>{name}</span>}
           </Tooltip>
@@ -476,7 +476,7 @@ const FilesPage: React.FC = () => {
 
         <Col span={18}>
           <Card size="small" title={
-            <Breadcrumb items={breadcrumbItems} separator={<span style={{ color: '#999', fontSize: 13, lineHeight: '20px', display: 'inline-flex', alignItems: 'center' }}>/</span>}
+            <Breadcrumb items={breadcrumbItems} separator={<span style={{ color: 'var(--db-text-tertiary)', fontSize: 13, lineHeight: '20px', display: 'inline-flex', alignItems: 'center' }}>/</span>}
               style={{ fontSize: 14 }} />}>
             <Table columns={columns}
               dataSource={fileList?.files || []}

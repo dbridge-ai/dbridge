@@ -1135,7 +1135,7 @@ const SQLEditor: React.FC = () => {
             loading={tab.loading}
             pagination={false}
           />
-          <div style={{ padding: '8px 16px', color: '#999', fontSize: 12 }}>
+          <div style={{ padding: '8px 16px', color: 'var(--db-text-tertiary)', fontSize: 12 }}>
             {tr('common.total')} {result.rows.length} {tr('common.rows')} | {tr('query.duration')} {result.duration}ms
           </div>
         </>
@@ -1190,11 +1190,11 @@ const SQLEditor: React.FC = () => {
             {col}
             {tab.type === 'table' && (tab as TableTab).columnSort?.column === originalCol && (
               (tab as TableTab).columnSort?.direction === 'asc'
-                ? <SortAscendingOutlined style={{ marginLeft: 4, color: '#20a53a' }} />
-                : <SortDescendingOutlined style={{ marginLeft: 4, color: '#20a53a' }} />
+                ? <SortAscendingOutlined style={{ marginLeft: 4, color: 'var(--db-primary)' }} />
+                : <SortDescendingOutlined style={{ marginLeft: 4, color: 'var(--db-primary)' }} />
             )}
             {tab.type === 'table' && (tab as TableTab).columnFilters?.[originalCol] && (
-              <FilterOutlined style={{ marginLeft: 4, color: '#faad14' }} />
+              <FilterOutlined style={{ marginLeft: 4, color: 'var(--db-warning)' }} />
             )}
           </span>
         </Dropdown>
@@ -1239,13 +1239,13 @@ const SQLEditor: React.FC = () => {
       render: (_: any, record: Record<string, any>) => (
         <Space size={4}>
           <Tooltip title={tr('query.view')}>
-            <Button type="text" size="small" icon={<EyeOutlined />} style={{ color: '#1890ff' }} onClick={() => {
+            <Button type="text" size="small" icon={<EyeOutlined />} style={{ color: 'var(--db-info)' }} onClick={() => {
               setRowDetail({ open: true, data: record, columns: result.columns });
             }} />
           </Tooltip>
           {!isReadOnly && (
             <Tooltip title={tr('query.edit')}>
-              <Button type="text" size="small" icon={<EditOutlined />} style={{ color: '#20a53a' }} onClick={async () => {
+              <Button type="text" size="small" icon={<EditOutlined />} style={{ color: 'var(--db-primary)' }} onClick={async () => {
                 if (isTableTab) {
                   const t = tab as any;
                   const cacheKey = `${t.dsId }:${t.schema || ''}:${t.table || ''}`;
@@ -1276,7 +1276,7 @@ const SQLEditor: React.FC = () => {
               handleDeleteRow(record, pk, tab);
             }}>
               <Tooltip title={tr('query.delete')}>
-                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: '#e74c3c' }} />
+                <Button type="text" size="small" icon={<DeleteOutlined />} style={{ color: 'var(--db-danger)' }} />
               </Tooltip>
             </Popconfirm>
           )}
@@ -1342,7 +1342,7 @@ const SQLEditor: React.FC = () => {
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Space size={4}>
-              <span style={{ fontSize: 12, color: '#666' }}>{tr('query.whereLabel')}:</span>
+              <span style={{ fontSize: 12, color: 'var(--db-text-secondary)' }}>{tr('query.whereLabel')}:</span>
               <Input
                 size="small" style={{ width: 300 }} placeholder={tr('query.wherePlaceholder')}
                 value={t.where} onChange={(e) => updateTab(tab.id, { where: e.target.value } as any)}
@@ -1350,7 +1350,7 @@ const SQLEditor: React.FC = () => {
               />
             </Space>
             <Space size={4}>
-              <span style={{ fontSize: 12, color: '#666' }}>{tr('query.orderByLabel')}:</span>
+              <span style={{ fontSize: 12, color: 'var(--db-text-secondary)' }}>{tr('query.orderByLabel')}:</span>
               <Input
                 size="small" style={{ width: 200 }} placeholder={tr('query.sortPlaceholder')}
                 value={t.orderBy} onChange={(e) => updateTab(tab.id, { orderBy: e.target.value, columnSort: null } as any)}
@@ -1402,7 +1402,7 @@ const SQLEditor: React.FC = () => {
               columns={[
                 { title: tr('query.nameCol'), dataIndex: 'name', key: 'name', render: (v: string, r: any) => (
                   <a onClick={() => openTableTab(r.schema || s.schema, v, r.type === 'view', r.database || s.database, s.dsId)}>
-                    {r.type === 'view' ? <EyeOutlined style={{ marginRight: 4, color: '#52c41a' }} /> : <TableOutlined style={{ marginRight: 4, color: '#1890ff' }} />}
+                    {r.type === 'view' ? <EyeOutlined style={{ marginRight: 4, color: 'var(--db-primary)' }} /> : <TableOutlined style={{ marginRight: 4, color: 'var(--db-info)' }} />}
                     {v}
                   </a>
                 )},
@@ -1523,7 +1523,7 @@ const SQLEditor: React.FC = () => {
           <Space size={8}>
             {t.scriptName && (
               <Space size={4}>
-                <FileTextOutlined style={{ color: '#20a53a', fontSize: 13 }} />
+                <FileTextOutlined style={{ color: 'var(--db-primary)', fontSize: 13 }} />
                 <Typography.Text style={{ fontSize: 12 }}>{t.scriptName}</Typography.Text>
                 <Typography.Text type="secondary" style={{ fontSize: 11 }}>
                   ({t.scriptSaveStatus === 'saving' ? tr('query.saving') : t.scriptSaveStatus === 'saved' ? tr('query.saved') : t.scriptSaveStatus === 'error' ? tr('query.saveFailed') : tr('query.noChanges')})
@@ -1535,10 +1535,10 @@ const SQLEditor: React.FC = () => {
         </div>
 
         {/* Row 2: SQL Editor */}
-        <div style={{ resize: 'vertical', overflow: 'auto', height: 120, minHeight: 60, maxHeight: 400, border: '1px solid #d9d9d9', borderRadius: 4, marginBottom: 8 }}>
+        <div style={{ resize: 'vertical', overflow: 'auto', height: 120, minHeight: 60, maxHeight: 400, border: '1px solid var(--db-border)', borderRadius: 4, marginBottom: 8 }}>
           <Editor
             height="100%" defaultLanguage="sql" value={t.sql}
-            loading={<div style={{ padding: 12, color: '#999' }}>{tr('query.editorLoading')}</div>}
+            loading={<div style={{ padding: 12, color: 'var(--db-text-tertiary)' }}>{tr('query.editorLoading')}</div>}
             onMount={(editor) => { editorRef.current = editor; }}
             onChange={(v) => {
               updateTab(tab.id, { sql: v || '' } as any);
@@ -1785,10 +1785,10 @@ const SQLEditor: React.FC = () => {
           </Card>
         </div>
         {/* Drag handle */}
-        <div onMouseDown={onDragStart} style={{ width: 4, cursor: 'col-resize', background: '#f0f0f0', borderRadius: 2, flexShrink: 0, alignSelf: 'stretch',
+        <div onMouseDown={onDragStart} style={{ width: 4, cursor: 'col-resize', background: 'var(--db-border-light)', borderRadius: 2, flexShrink: 0, alignSelf: 'stretch',
           transition: 'background 0.15s' }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = '#bfbfbf'; }}
-          onMouseLeave={(e) => { if (!draggingRef.current) (e.currentTarget as HTMLDivElement).style.background = '#f0f0f0'; }} />
+          onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = 'var(--db-disabled)'; }}
+          onMouseLeave={(e) => { if (!draggingRef.current) (e.currentTarget as HTMLDivElement).style.background = 'var(--db-border-light)'; }} />
         {/* Right: Tabs */}
         <div ref={rightPanelRef} style={{ flex: 1, minWidth: 0, minHeight: 'calc(100vh - 140px)' }}>
           {tabs.length === 0 ? (
@@ -1877,7 +1877,7 @@ const SQLEditor: React.FC = () => {
               {
                 title: tr('query.fieldInfo'), dataIndex: 'meta', key: 'meta', width: 280,
                 render: (m: string) => (
-                  <span style={{ fontSize: 12, color: '#666', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{m}</span>
+                  <span style={{ fontSize: 12, color: 'var(--db-text-secondary)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{m}</span>
                 ),
               },
             ]}
@@ -2028,7 +2028,7 @@ const SQLEditor: React.FC = () => {
         width={800}
       >
         <Spin spinning={viewDefLoading}>
-          <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+          <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
             <Editor 
               height={400} 
               defaultLanguage="sql" 
@@ -2154,7 +2154,7 @@ const SQLEditor: React.FC = () => {
         okButtonProps={{ danger: true, disabled: deleteConfirmName !== deleteTarget.name }}
       >
         <div style={{ marginBottom: 12 }}>
-          <p style={{ color: '#e74c3c', fontWeight: 500 }}>
+          <p style={{ color: 'var(--db-danger)', fontWeight: 500 }}>
             {tr('query.confirmDeletePermanent', { type: deleteTarget.isView ? tr('query.viewLabel') : tr('query.tableLabel') })} <strong>{deleteTarget.schema}.{deleteTarget.name}</strong> {tr('query.andAllData')}
           </p>
           <p>{tr('query.enterNameConfirm', { type: deleteTarget.isView ? tr('query.viewLabel') : tr('query.tableLabel') })}</p>
@@ -2207,7 +2207,7 @@ const SQLEditor: React.FC = () => {
                 if (item._isDir) {
                   return (
                     <List.Item style={{ cursor: 'pointer' }} onClick={() => loadScriptDir(item.path)}>
-                      <List.Item.Meta avatar={<FolderOutlined style={{ fontSize: 18, color: '#faad14', marginTop: 4 }} />}
+                      <List.Item.Meta avatar={<FolderOutlined style={{ fontSize: 18, color: 'var(--db-warning)', marginTop: 4 }} />}
                         title={item.name} />
                     </List.Item>
                   );
@@ -2215,7 +2215,7 @@ const SQLEditor: React.FC = () => {
                 return (
                   <List.Item style={{ cursor: 'pointer' }} onClick={() => loadScript(item as ScriptFileInfo)}
                     actions={[<Typography.Text type="secondary" key="time" style={{ fontSize: 11 }}>{item.mod_time?.slice(0, 16) || ''}</Typography.Text>]}>
-                    <List.Item.Meta avatar={<FileTextOutlined style={{ fontSize: 18, color: '#20a53a', marginTop: 4 }} />}
+                    <List.Item.Meta avatar={<FileTextOutlined style={{ fontSize: 18, color: 'var(--db-primary)', marginTop: 4 }} />}
                       title={item.name}
                       description={<Typography.Text type="secondary" style={{ fontSize: 12 }}>{item.path}</Typography.Text>} />
                   </List.Item>

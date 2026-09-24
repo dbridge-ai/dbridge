@@ -72,7 +72,7 @@ const ImportModal: React.FC<Props> = ({ open, onClose }) => {
       content: (
         <div>
           <p>{t('willExecuteOnTarget')}</p>
-          <p style={{ color: '#e74c3c', fontWeight: 500 }}>{t('ensureBackup')}</p>
+          <p style={{ color: 'var(--db-danger)', fontWeight: 500 }}>{t('ensureBackup')}</p>
         </div>
       ),
       okText: t('confirmExecute'),
@@ -148,7 +148,7 @@ const ImportModal: React.FC<Props> = ({ open, onClose }) => {
             <Button size="small" icon={<UploadOutlined />}>{t('uploadSqlFile')}</Button>
           </Upload>
         </div>
-        <div style={{ border: '1px solid #d9d9d9', borderRadius: 4, marginBottom: 12 }}>
+        <div style={{ border: '1px solid var(--db-border)', borderRadius: 4, marginBottom: 12 }}>
           <Editor
             height={350}
             defaultLanguage="sql"

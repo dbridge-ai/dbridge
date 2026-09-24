@@ -11,9 +11,9 @@ const HalfCircleIcon: React.FC<HalfCircleIconProps> = ({ status, size = 14 }) =>
   const r = half - strokeW;
 
   const colors: Record<string, { left: string; right: string }> = {
-    source_only: { left: '#23A51A', right: '#d9d9d9' },  // orange left + grey right
-    target_only: { left: '#d9d9d9', right: '#23A51A' },  // grey left + blue right
-    both:       { left: '#23A51A', right: '#23A51A'},   // green both
+    source_only: { left: 'var(--db-primary)', right: 'var(--db-border)' },  // orange left + grey right
+    target_only: { left: 'var(--db-border)', right: 'var(--db-primary)' },  // grey left + blue right
+    both:       { left: 'var(--db-primary)', right: 'var(--db-primary)'},   // green both
   };
 
   const c = colors[status];
@@ -37,7 +37,7 @@ const HalfCircleIcon: React.FC<HalfCircleIconProps> = ({ status, size = 14 }) =>
         strokeLinecap="butt"
       />
       {/* Vertical divider line */}
-      <line x1={half} y1={strokeW + 1} x2={half} y2={size - strokeW - 1} stroke="#e8e8e8" strokeWidth={0.0} />
+      <line x1={half} y1={strokeW + 1} x2={half} y2={size - strokeW - 1} stroke="var(--db-border)" strokeWidth={0.0} />
     </svg>
   );
 };

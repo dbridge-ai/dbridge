@@ -95,11 +95,11 @@ const AlterTableModal: React.FC<Props> = ({
           width: 700,
           content: (
             <div style={{ fontSize: 13 }}>
-              <div style={{ color: '#ff4d4f', marginBottom: 8 }}>{result?.error}</div>
+              <div style={{ color: 'var(--db-danger)', marginBottom: 8 }}>{result?.error}</div>
               {result?.executed?.length > 0 && (
                 <div>
                   <Text strong>已执行:</Text>
-                  <pre style={{ fontSize: 11, background: '#f5f5f5', padding: 8, maxHeight: 120, overflow: 'auto' }}>
+                  <pre style={{ fontSize: 11, background: 'var(--db-row-hover-bg)', padding: 8, maxHeight: 120, overflow: 'auto' }}>
                     {result.executed.join(';\n')}
                   </pre>
                 </div>
@@ -107,13 +107,13 @@ const AlterTableModal: React.FC<Props> = ({
               {result?.not_executed?.length > 0 && (
                 <div>
                   <Text strong>未执行:</Text>
-                  <pre style={{ fontSize: 11, background: '#f5f5f5', padding: 8, maxHeight: 120, overflow: 'auto' }}>
+                  <pre style={{ fontSize: 11, background: 'var(--db-row-hover-bg)', padding: 8, maxHeight: 120, overflow: 'auto' }}>
                     {result.not_executed.join(';\n')}
                   </pre>
                 </div>
               )}
               {result?.rollback_script_path && (
-                <div style={{ marginTop: 8, color: '#666' }}>
+                <div style={{ marginTop: 8, color: 'var(--db-text-secondary)' }}>
                   回退脚本: {result.rollback_script_path}
                 </div>
               )}
@@ -161,7 +161,7 @@ const AlterTableModal: React.FC<Props> = ({
           <Text style={{ fontSize: 12 }}>编辑模式 (微调 DDL)</Text>
         </Space>
       </div>
-      <div style={{ border: '1px solid #d9d9d9', borderRadius: 4, marginBottom: 12 }}>
+      <div style={{ border: '1px solid var(--db-border)', borderRadius: 4, marginBottom: 12 }}>
         <Editor
           height={180}
           defaultLanguage="sql"
@@ -179,7 +179,7 @@ const AlterTableModal: React.FC<Props> = ({
       </div>
 
       <Text strong style={{ display: 'block', marginBottom: 8 }}>回退脚本 (自动生成, 不执行):</Text>
-      <div style={{ border: '1px solid #d9d9d9', borderRadius: 4, background: '#fafafa', marginBottom: 12 }}>
+      <div style={{ border: '1px solid var(--db-border)', borderRadius: 4, background: 'var(--db-table-header-bg)', marginBottom: 12 }}>
         <Editor
           height={120}
           defaultLanguage="sql"
@@ -204,7 +204,7 @@ const AlterTableModal: React.FC<Props> = ({
             description={
               <ul style={{ margin: 0, paddingLeft: 20 }}>
                 {warnings.map((w, i) => (
-                  <li key={i} style={{ color: highRisk ? '#ff4d4f' : '#faad14' }}>{w}</li>
+                  <li key={i} style={{ color: highRisk ? 'var(--db-danger)' : 'var(--db-warning)' }}>{w}</li>
                 ))}
               </ul>
             }

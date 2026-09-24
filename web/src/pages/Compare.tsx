@@ -449,8 +449,8 @@ const Compare: React.FC = () => {
 
   const statusBg = (status: string) => {
     if (status === 'both') return 'transparent';
-    if (status === 'source_only') return '#fffbe6';
-    return '#e6f7ff';
+    if (status === 'source_only') return 'var(--db-warning-bg)';
+    return 'var(--db-info-bg)';
   };
 
   const typeIcon = (type: string) =>
@@ -934,8 +934,8 @@ const Compare: React.FC = () => {
           <Empty
             image={false}
             description={
-              <div style={{ textAlign: 'left', lineHeight: 2, fontSize: 14, color: '#666', maxWidth: 580, margin: '0 auto' }}>
-                <div style={{ fontSize: 18, fontWeight: 600, color: '#333', marginBottom: 12, textAlign: 'center' }}>{tr('compare.guideTitle')}</div>
+              <div style={{ textAlign: 'left', lineHeight: 2, fontSize: 14, color: 'var(--db-text-secondary)', maxWidth: 580, margin: '0 auto' }}>
+                <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--db-text-primary)', marginBottom: 12, textAlign: 'center' }}>{tr('compare.guideTitle')}</div>
                 <p>{tr('compare.guideDesc')}</p>
                 <p style={{ marginBottom: 4 }}><b>{tr('compare.guideSteps')}</b></p>
                 <ol style={{ margin: '0 0 12px 0', paddingLeft: 20 }}>
@@ -952,7 +952,7 @@ const Compare: React.FC = () => {
                 <ul style={{ margin: '0 0 12px 0', paddingLeft: 20 }}>
                   <li>{tr('compare.guideNoSync')}</li>
                 </ul>
-                <p style={{ fontSize: 12, color: '#999', textAlign: 'center' }}>{tr('compare.supportedDBs')}</p>
+                <p style={{ fontSize: 12, color: 'var(--db-text-tertiary)', textAlign: 'center' }}>{tr('compare.supportedDBs')}</p>
               </div>
             }
           />
@@ -1000,12 +1000,12 @@ const Compare: React.FC = () => {
                 <Input
                   size="small"
                   placeholder={tr('compare.searchTable')}
-                  prefix={<SearchOutlined style={{ color: '#999' }} />}
+                  prefix={<SearchOutlined style={{ color: 'var(--db-text-tertiary)' }} />}
                   allowClear
                   value={objectFilter}
                   onChange={(e) => setObjectFilter(e.target.value)}
                   style={{ fontSize: 12 }}
-                  suffix={<span style={{ fontSize: 11, color: '#999' }}>{filteredObjects.length}/{objects.length}</span>}
+                  suffix={<span style={{ fontSize: 11, color: 'var(--db-text-tertiary)' }}>{filteredObjects.length}/{objects.length}</span>}
                 />
               }
               style={leftListHeight ? { height: leftListHeight, overflow: 'auto', width: '100%' } : { minHeight: 'calc(100vh - 120px)', overflow: 'auto', width: '100%' }}
@@ -1021,10 +1021,10 @@ const Compare: React.FC = () => {
                     style={{
                       cursor: 'pointer',
                       padding: '3px 6px',
-                      background: selectedObj === obj.name ? '#e6ffe6' : statusBg(obj.status),
+                      background: selectedObj === obj.name ? 'var(--db-success-bg)' : statusBg(obj.status),
                       borderRadius: 4,
                       marginBottom: 1,
-                      border: selectedObj === obj.name ? '1px solid #20a53a' : '1px solid transparent',
+                      border: selectedObj === obj.name ? '1px solid var(--db-primary)' : '1px solid transparent',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -1156,9 +1156,9 @@ const Compare: React.FC = () => {
                       children: (
                         <Spin spinning={structLoading}>
                           <style>{`
-                            .row-diff td { background: #fffbe6 !important; }
-                            .row-source-only td { background: #fff7e6 !important; }
-                            .row-target-only td { background: #e6f7ff !important; }
+                            .row-diff td { background: var(--db-warning-bg) !important; }
+                            .row-source-only td { background: var(--db-warning-bg) !important; }
+                            .row-target-only td { background: var(--db-info-bg) !important; }
                           `}</style>
                           <Row gutter={8} style={{ overflow: 'hidden' }}>
                             <Col span={12} style={{ minWidth: 0 }}>
@@ -1197,7 +1197,7 @@ const Compare: React.FC = () => {
                                     fontSize: 12,
                                     maxHeight: 300,
                                     overflow: 'auto',
-                                    background: '#f5f5f5',
+                                    background: 'var(--db-row-hover-bg)',
                                     padding: 12,
                                     borderRadius: 4,
                                   }}
@@ -1214,7 +1214,7 @@ const Compare: React.FC = () => {
                                     fontSize: 12,
                                     maxHeight: 300,
                                     overflow: 'auto',
-                                    background: '#f5f5f5',
+                                    background: 'var(--db-row-hover-bg)',
                                     padding: 12,
                                     borderRadius: 4,
                                   }}
@@ -1299,7 +1299,7 @@ const Compare: React.FC = () => {
                       fontSize: 12,
                       maxHeight: 400,
                       overflow: 'auto',
-                      background: '#f5f5f5',
+                      background: 'var(--db-row-hover-bg)',
                       padding: 12,
                       borderRadius: 4,
                       whiteSpace: 'pre-wrap',
@@ -1416,7 +1416,7 @@ const Compare: React.FC = () => {
                   <div>{tr('compare.syncedRows')}: {dataSyncResult.synced_rows}</div>
                   <div>{tr('compare.skippedRows')}: {dataSyncResult.skipped_rows}</div>
                   {dataSyncResult.errors?.length > 0 && (
-                    <div style={{ color: '#ff4d4f', marginTop: 4 }}>
+                    <div style={{ color: 'var(--db-danger)', marginTop: 4 }}>
                       {tr('compare.errorsLabel')}: {dataSyncResult.errors.join(', ')}
                     </div>
                   )}

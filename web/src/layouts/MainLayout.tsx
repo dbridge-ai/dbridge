@@ -131,7 +131,7 @@ const MainLayout: React.FC = () => {
         width={200}
         collapsedWidth={60}
         style={{
-          background: '#3a3f4a',
+          background: 'var(--db-sider-bg)',
           boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
           height: 'auto',
           minHeight: '100vh',
@@ -162,7 +162,7 @@ const MainLayout: React.FC = () => {
           selectedKeys={[location.pathname]}
           items={menuItems}
           onClick={({ key }) => { if (key.startsWith('/')) navigate(key); }}
-          style={{ background: '#3a3f4a', borderRight: 0 }}
+          style={{ background: 'var(--db-sider-bg)', borderRight: 0 }}
         />
       </Sider>
       <Layout style={{ minHeight: '100vh' }}>
@@ -171,11 +171,11 @@ const MainLayout: React.FC = () => {
             height: 50,
             lineHeight: '50px',
             padding: '0 16px',
-            background: '#fff',
+            background: 'var(--db-card-bg)',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            borderBottom: '1px solid #e8e8e8',
+            borderBottom: '1px solid var(--db-border)',
             boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
           }}
         >
@@ -199,11 +199,11 @@ const MainLayout: React.FC = () => {
                 size={30}
                 src={user.avatar_url || undefined}
                 icon={<UserOutlined />}
-                style={{ background: '#20a53a' }}
+                style={{ background: 'var(--db-primary)' }}
               >
                 {user.username?.[0]?.toUpperCase() || 'U'}
               </Avatar>
-              <span style={{ color: '#333' }}>{user.username || t('common.user')}</span>
+              <span style={{ color: 'var(--db-text-primary)' }}>{user.username || t('common.user')}</span>
             </Space>
           </Dropdown>
           </Space>
@@ -212,7 +212,7 @@ const MainLayout: React.FC = () => {
           style={{
             margin: 16,
             padding: 20,
-            background: '#fff',
+            background: 'var(--db-card-bg)',
             borderRadius: 4,
             flex: 1,
             overflow: 'hidden',

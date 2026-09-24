@@ -108,7 +108,7 @@ const SyncTasks: React.FC = () => {
       dataIndex: 'progress',
       key: 'progress',
       width: 120,
-      render: (p: number) => <Progress percent={Math.round(p)} size="small" strokeColor="#20a53a" />,
+      render: (p: number) => <Progress percent={Math.round(p)} size="small" strokeColor="var(--db-primary)" />,
     },
     { title: tr('syncTasks.lastSync'), dataIndex: 'last_sync_time', key: 'last_sync_time' },
     {
@@ -119,14 +119,14 @@ const SyncTasks: React.FC = () => {
         <Space size={8}>
           {record.status === 'pending' || record.status === 'failed' ? (
             <a
-              style={{ color: '#20a53a' }}
+              style={{ color: 'var(--db-primary)' }}
               onClick={() => handleStart(record.id)}
             >
               {tr('syncTasks.start')}
             </a>
           ) : (
             <a
-              style={{ color: '#e74c3c' }}
+              style={{ color: 'var(--db-danger)' }}
               onClick={() => handleStop(record.id)}
             >
               {tr('syncTasks.stop')}

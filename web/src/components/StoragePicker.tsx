@@ -48,7 +48,7 @@ const StoragePicker: React.FC<StoragePickerProps> = ({ profiles, value, onChange
       return files
         .filter(f => f.is_dir)
         .map(d => ({
-          title: <Space><FolderOutlined style={{ color: '#faad14' }} /><span>{d.name}</span></Space>,
+          title: <Space><FolderOutlined style={{ color: 'var(--db-warning)' }} /><span>{d.name}</span></Space>,
           key: d.path,
           isLeaf: depth + 1 >= MAX_DEPTH,
         }));
@@ -131,7 +131,7 @@ const StoragePicker: React.FC<StoragePickerProps> = ({ profiles, value, onChange
           <div style={{ marginBottom: 12 }}>
             <Text strong>{t('transfer.targetDir')}</Text>
             <div style={{
-              border: '1px solid #d9d9d9',
+              border: '1px solid var(--db-border)',
               borderRadius: 6,
               padding: 8,
               marginTop: 4,

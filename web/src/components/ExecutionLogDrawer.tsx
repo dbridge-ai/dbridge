@@ -65,14 +65,14 @@ const ExecutionLogDrawer: React.FC<Props> = ({ open, taskId, execId, onClose }) 
   };
 
   const renderLogLines = () => {
-    if (!logText) return <div style={{ color: '#999' }}>{t('noLogs')}</div>;
+    if (!logText) return <div style={{ color: 'var(--db-text-tertiary)' }}>{t('noLogs')}</div>;
 
     const lines = logText.split('\n').filter(line => line.trim());
     return lines.map((line, idx) => {
-      let color = '#333';
-      if (line.includes('[ERROR]')) color = '#e74c3c';
-      else if (line.includes('[WARN]')) color = '#fa8c16';
-      else if (line.includes('[INFO]')) color = '#333';
+      let color = 'var(--db-text-primary)';
+      if (line.includes('[ERROR]')) color = 'var(--db-danger)';
+      else if (line.includes('[WARN]')) color = 'var(--db-warning)';
+      else if (line.includes('[INFO]')) color = 'var(--db-text-primary)';
 
       return (
         <div key={idx} style={{ color, fontFamily: 'monospace', fontSize: 12, marginBottom: 4 }}>

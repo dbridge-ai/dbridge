@@ -928,7 +928,7 @@ const SchemaTree: React.FC<SchemaTreeProps> = ({
         .schema-tree .ant-tree-title { flex: 1; display: block !important; }
       `}</style>
       {/* Header */}
-      <div style={{ padding: '4px 8px', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div style={{ padding: '4px 8px', borderBottom: '1px solid var(--db-border-light)', display: 'flex', alignItems: 'center', gap: 4 }}>
         <Input
           size="small"
           placeholder="Search..."

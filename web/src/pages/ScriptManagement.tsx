@@ -85,7 +85,7 @@ const ScriptManagement: React.FC = () => {
     for (const d of cached.dirs) {
       const childLoaded = treeCache.current[d.path]?.loaded;
       nodes.push({
-        title: <Space><FolderOutlined style={{ color: '#faad14' }} /><span>{d.name}</span></Space>,
+        title: <Space><FolderOutlined style={{ color: 'var(--db-warning)' }} /><span>{d.name}</span></Space>,
         key: d.path,
         isLeaf: false,
         selectable: true,
@@ -99,7 +99,7 @@ const ScriptManagement: React.FC = () => {
 
     for (const f of cached.files) {
       nodes.push({
-        title: <Space><FileTextOutlined style={{ color: '#1677ff' }} /><span>{f.name}</span></Space>,
+        title: <Space><FileTextOutlined style={{ color: 'var(--db-info)' }} /><span>{f.name}</span></Space>,
         key: f.path,
         isLeaf: true,
         selectable: true,
@@ -392,7 +392,7 @@ const ScriptManagement: React.FC = () => {
     {
       title: (
         <span onClick={() => { setCurrentDir(''); if (!treeCache.current['']?.loaded) loadDir(''); }}
-          style={{ cursor: 'pointer', color: '#1677ff' }}>
+          style={{ cursor: 'pointer', color: 'var(--db-info)' }}>
           <HomeOutlined style={{ marginRight: 2 }} />{tr('scripts.rootDir')}
         </span>
       ),
@@ -403,7 +403,7 @@ const ScriptManagement: React.FC = () => {
           const target = arr.slice(0, idx + 1).join('/');
           setCurrentDir(target);
           if (!treeCache.current[target]?.loaded) loadDir(target);
-        }} style={{ cursor: 'pointer', color: '#1677ff' }}>
+        }} style={{ cursor: 'pointer', color: 'var(--db-info)' }}>
           {part}
         </span>
       ),
@@ -474,7 +474,7 @@ const ScriptManagement: React.FC = () => {
         <Card size="small" style={{ marginBottom: 8 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Space size={4}>
-              <Breadcrumb items={breadcrumbItems} separator={<span style={{ color: '#999', fontSize: 13 }}>/</span>} style={{ fontSize: 14 }} />
+              <Breadcrumb items={breadcrumbItems} separator={<span style={{ color: 'var(--db-text-tertiary)', fontSize: 13 }}>/</span>} style={{ fontSize: 14 }} />
               {selectedPath && <Text type="secondary" style={{ fontSize: 13 }}>/ {selectedName}</Text>}
             </Space>
             {selectedPath && (
@@ -499,7 +499,7 @@ const ScriptManagement: React.FC = () => {
 
         {/* Editor */}
         {selectedPath ? (
-            <div style={{ flex: 1, border: '1px solid #d9d9d9', borderRadius: 4 }}>
+            <div style={{ flex: 1, border: '1px solid var(--db-border)', borderRadius: 4 }}>
               {editorLoading ? (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   <Spin />

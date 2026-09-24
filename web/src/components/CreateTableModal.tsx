@@ -297,7 +297,7 @@ const CreateTableModal: React.FC<CreateTableModalProps> = ({
       {ddl && (
         <>
           <div style={{ marginBottom: 8, fontWeight: 500 }}>DDL 预览</div>
-          <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+          <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
             <Editor
               height={180}
               defaultLanguage="sql"

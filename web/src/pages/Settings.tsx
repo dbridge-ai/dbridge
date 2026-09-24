@@ -77,23 +77,23 @@ const Settings: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontWeight: 500 }}>{tr('audit.enableAutoClean')}</div>
-              <div style={{ fontSize: 12, color: '#999' }}>{tr('audit.autoCleanDesc')}</div>
+              <div style={{ fontSize: 12, color: 'var(--db-text-tertiary)' }}>{tr('audit.autoCleanDesc')}</div>
             </div>
             <Switch checked={retention.enabled} onChange={(v) => setRetention(prev => ({ ...prev, enabled: v }))} />
           </div>
           <div style={{ display: 'flex', gap: 16 }}>
             <div>
-              <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>{tr('audit.retentionDays')}</div>
+              <div style={{ fontSize: 12, color: 'var(--db-text-tertiary)', marginBottom: 4 }}>{tr('audit.retentionDays')}</div>
               <InputNumber min={1} max={365} value={retention.days} disabled={!retention.enabled}
                 onChange={(v) => setRetention(prev => ({ ...prev, days: v || 90 }))} style={{ width: 120 }} />
             </div>
             <div>
-              <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>{tr('audit.cleanTime')}</div>
+              <div style={{ fontSize: 12, color: 'var(--db-text-tertiary)', marginBottom: 4 }}>{tr('audit.cleanTime')}</div>
               <Input placeholder="0 3 * * *" value={retention.cron} disabled={!retention.enabled}
                 onChange={(e) => setRetention(prev => ({ ...prev, cron: e.target.value }))} style={{ width: 130 }} />
             </div>
             <div>
-              <div style={{ fontSize: 12, color: '#999', marginBottom: 4 }}>{tr('audit.batchDeleteSize')}</div>
+              <div style={{ fontSize: 12, color: 'var(--db-text-tertiary)', marginBottom: 4 }}>{tr('audit.batchDeleteSize')}</div>
               <InputNumber min={100} max={5000} value={retention.batchSize} disabled={!retention.enabled}
                 onChange={(v) => setRetention(prev => ({ ...prev, batchSize: v || 1000 }))} style={{ width: 120 }} />
             </div>

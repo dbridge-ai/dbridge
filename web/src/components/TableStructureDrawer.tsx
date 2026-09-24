@@ -372,7 +372,7 @@ const TableStructureDrawer: React.FC<Props> = ({
         >
           复制
         </Button>
-        <div style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+        <div style={{ border: '1px solid var(--db-border)', borderRadius: 4 }}>
           <Editor
             height={500}
             defaultLanguage="sql"
