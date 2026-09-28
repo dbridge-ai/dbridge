@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/homej-top/dbridge/internal/service/drivers"
+	"github.com/dbridge-ai/dbridge/internal/service/drivers"
 )
 
 // ─── Column Helpers ────────────────────────────────────────────────────────

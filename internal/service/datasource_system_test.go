@@ -6,9 +6,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/repository"
-	cryptoPkg "github.com/homej-top/dbridge/pkg/crypto"
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	cryptoPkg "github.com/dbridge-ai/dbridge/pkg/crypto"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

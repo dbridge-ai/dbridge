@@ -5,10 +5,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/model"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/model"
 )
 
 type Claims struct {

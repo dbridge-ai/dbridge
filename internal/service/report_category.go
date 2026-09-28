@@ -5,7 +5,7 @@ import (
 
 	"time"
 
-	"github.com/homej-top/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/repository"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

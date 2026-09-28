@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/dbridge-ai/dbridge/internal/repository"
 	"github.com/google/uuid"
-	"github.com/homej-top/dbridge/internal/repository"
 	"gorm.io/gorm"
 )
 

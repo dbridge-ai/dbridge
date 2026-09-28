@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/homej-top/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/config"
 )
 
 var (

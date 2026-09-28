@@ -3,7 +3,7 @@ package logger
 import (
 	"os"
 
-	"github.com/homej-top/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

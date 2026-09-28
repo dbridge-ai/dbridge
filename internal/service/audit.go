@@ -9,8 +9,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/homej-top/dbridge/internal/repository"
-	cachePkg "github.com/homej-top/dbridge/pkg/cache"
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	cachePkg "github.com/dbridge-ai/dbridge/pkg/cache"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

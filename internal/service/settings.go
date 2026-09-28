@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/homej-top/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/repository"
 	"gorm.io/gorm"
 )
 

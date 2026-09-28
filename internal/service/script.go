@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/pkg/storage"
 	"github.com/google/uuid"
-	"github.com/homej-top/dbridge/internal/repository"
-	"github.com/homej-top/dbridge/pkg/storage"
 	"gorm.io/gorm"
 )
 

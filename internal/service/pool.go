@@ -12,8 +12,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/homej-top/dbridge/internal/repository"
-	"github.com/homej-top/dbridge/internal/service/drivers"
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/service/drivers"
 	"go.uber.org/zap"
 	"golang.org/x/sync/singleflight"
 )

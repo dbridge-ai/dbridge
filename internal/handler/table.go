@@ -3,11 +3,11 @@ package handler
 import (
 	"net/http"
 
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/model"
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/service"
 	"github.com/gin-gonic/gin"
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/model"
-	"github.com/homej-top/dbridge/internal/repository"
-	"github.com/homej-top/dbridge/internal/service"
 	"go.uber.org/zap"
 )
 

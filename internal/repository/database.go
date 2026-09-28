@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/service/drivers"
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/service/drivers"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"

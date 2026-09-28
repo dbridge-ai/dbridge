@@ -12,10 +12,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/repository"
-	"github.com/homej-top/dbridge/internal/service/drivers"
-	cryptoPkg "github.com/homej-top/dbridge/pkg/crypto"
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/service/drivers"
+	cryptoPkg "github.com/dbridge-ai/dbridge/pkg/crypto"
 	"gorm.io/gorm"
 )
 

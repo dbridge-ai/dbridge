@@ -3,9 +3,9 @@ package service
 import (
 	"errors"
 
-	"github.com/homej-top/dbridge/internal/config"
-	"github.com/homej-top/dbridge/internal/middleware"
-	"github.com/homej-top/dbridge/internal/repository"
+	"github.com/dbridge-ai/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/middleware"
+	"github.com/dbridge-ai/dbridge/internal/repository"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

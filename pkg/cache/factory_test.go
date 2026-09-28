@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/homej-top/dbridge/internal/config"
+	"github.com/dbridge-ai/dbridge/internal/config"
 )
 
 // TestInitFallbackLocal backend=redis 不可达 + fallback_local=true → 降级 local，不报错。

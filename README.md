@@ -89,7 +89,7 @@ DBridge（数桥）是一款面向开发者和 DBA 的 **Web 端数据库管理�
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/homej-top/dbridge.git
+git clone https://github.com/dbridge-ai/dbridge.git
 cd dbridge
 
 # 2. 构建全栈（后端 + 前端）
@@ -239,7 +239,7 @@ DBridge is a **web-based database management and synchronization platform** for 
 ### Quick Start
 
 ```bash
-git clone https://github.com/homej-top/dbridge.git
+git clone https://github.com/dbridge-ai/dbridge.git
 cd dbridge
 ./build.sh
 ./start.sh
